@@ -17,7 +17,16 @@ public class MyStudentDatabase implements StudentDatabase {
 			ps=conn.prepareStatement("insert into student values(?,?)");
 			ps.setString(1, s.getUserName());
 			ps.setString(2, s.getPassWord());
-			ps.setString(3, s.getName());
+			ps.setString(3, s.getFirstName());
+			ps.setString(4, s.getLastName());
+			ps.setString(5, s.getId());
+			ps.setString(6, s.getDateOfBirth());
+			ps.setString(7, s.getEmail());
+			ps.setString(8, s.getEducation());
+			ps.setString(9, s.getRating());
+			ps.setString(10, s.getBookingHistory());
+			ps.setString(11, s.getAddress());
+
 			status=ps.executeUpdate();
 			conn.close();
 			
@@ -45,7 +54,15 @@ public class MyStudentDatabase implements StudentDatabase {
 			while(rs.next()) {
 				s.setUserName(rs.getString(1));
 				s.setPassWord(rs.getString(2));
-				s.setName(rs.getString(3));
+				s.setFirstName(rs.getString(3));
+				s.setLastName(rs.getString(4));
+				s.setId(rs.getString(5));
+				s.setDateOfBirth(rs.getString(6));
+				s.setEmail(rs.getString(7));
+				s.setEducation(rs.getString(8));
+				s.setRating(rs.getString(9));
+				s.setBookingHistory(rs.getString(10));
+				s.setAddress(rs.getString(11));
 				
 			}
 			

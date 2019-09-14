@@ -59,22 +59,33 @@ public class RegisterServlet extends HttpServlet {
 			String price = request.getParameter("price");
 			
 			Tutor t = td.getTutor(userName, passWord1);
+			if (passWord1.equals(passWord2)) {
+				t.setUserName(userName);
+				t.setPassWord(passWord1);
+				t.setFirstName(fname);
+				td.insertTutor(t);
+				writer.println("Welcome, please login");
+				response.sendRedirect("login.jsp");
+			} else{
+				writer.println("password does not match");
+			}
 		}
 		else {
 			Student s = sd.getStudent(userName, passWord1);
+			if (passWord1.equals(passWord2)) {
+				s.setUserName(userName);
+				s.setPassWord(passWord1);
+				s.setFirstName(fname);
+				sd.insertStudent(s);
+				writer.println("Welcome, please login");
+				response.sendRedirect("login.jsp");
+			} else{
+				writer.println("password does not match");
+			}
 		}
 
 
-		if (passWord1.equals(passWord2)) {
-			s.setUserName(userName);
-			s.setPassWord(passWord1);
-			s.setName(name);
-			sd.insertStudent(s);
-			writer.println("Welcome, please login");
-			response.sendRedirect("login.jsp");
-		} else{
-			writer.println("password does not match");
-		}
+		
 	}
 
 }

@@ -27,7 +27,7 @@ public class Member {
 	public String getFirstName() {
 		return firstName;
 	}
-	public void setfirstName(String firstName) {
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 	public String getId() {
