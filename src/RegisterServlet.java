@@ -30,6 +30,7 @@ public class RegisterServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -40,13 +41,29 @@ public class RegisterServlet extends HttpServlet {
 		doGet(request, response);
 		
 		StudentDatabase sd = new MyStudentDatabase();
+		TutorDatabase td = new MyTutorDatabase();
 		
 		String userName = request.getParameter("userName");
 		String passWord1 = request.getParameter("passWord1");
 		String passWord2 = request.getParameter("passWord2");
-		String name = request.getParameter("name");
+		String fname = request.getParameter("fname");
+		String lname = request.getParameter("lname");
+		String dob = request.getParameter("dob");
+		String education = request.getParameter("education");
+		String address = request.getParameter("address");
+		String type = request.getParameter("type");
 		
-		Student s = sd.getStudent(userName, passWord1);
+		if(type=="tutor") {
+			String serviceRadius = request.getParameter("serviceRadius");
+			String[] subjects = request.getParameter("subjects").split(",");
+			String price = request.getParameter("price");
+			
+			Tutor t = td.getTutor(userName, passWord1);
+		}
+		else {
+			Student s = sd.getStudent(userName, passWord1);
+		}
+
 
 		if (passWord1.equals(passWord2)) {
 			s.setUserName(userName);
