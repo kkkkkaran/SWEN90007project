@@ -2,9 +2,11 @@ package source;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 
 public class MyTutorDatabase implements TutorDatabase {
-
+	
+	static HashMap<Integer, Tutor> tutorIdentityMap = new HashMap<Integer, Tutor>();
 	static Connection conn;
 	static PreparedStatement ps;
 	
@@ -96,12 +98,16 @@ public class MyTutorDatabase implements TutorDatabase {
 			System.out.println(e);
 			
 		}
-		
+		tutorIdentityMap.put(t.getId(), t);
 		return t;
 	}
 	public Tutor getTutorAtId(int id) {
 			
-	
+			//identity map implementation
+			if(tutorIdentityMap.containsKey(id)) {
+				Tutor t=tutorIdentityMap.get(id);
+				return t;
+			}
 			Tutor t = new Tutor();
 			
 			try {
@@ -130,8 +136,10 @@ public class MyTutorDatabase implements TutorDatabase {
 				System.out.println(e);
 				
 			}
-			
+			tutorIdentityMap.put(id, t);
 			return t;
 		}
+		
+		
 
 }
