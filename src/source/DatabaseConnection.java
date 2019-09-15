@@ -1,4 +1,4 @@
-
+package source;
 public interface DatabaseConnection {
 
 	String connUrl = "jdbc:postgresql://127.0.0.1:5432/";

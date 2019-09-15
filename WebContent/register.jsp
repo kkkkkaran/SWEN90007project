@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="source.CourseGateway" %> 
+<%@ page import="source.Course" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,13 +62,23 @@
 				</td>
             </tr>
             <tr>
-                <td>Service Radius :</td>
-                <td><input type="text" name="serviceRadius" id="serviceRadius" disabled></td>
-            </tr>
-            <tr>
-                <td>Subject List :</td>
-                <td><input type="text" name="subjects" id="subjects" disabled></td>
-            </tr>
+                <td>Subject List :</td></tr>
+                <%
+                	
+                	String courses = CourseGateway.listCoursesText();
+                	String[] courseList = courses.split(",");
+                	for (int i=0;i<courseList.length;i++){
+                		pageContext.setAttribute("test", courseList[i]);		
+                
+                %>
+                
+                <tr><td><input type="checkbox" name="subjects" id="subjects" value="${test}" disabled></td></tr>
+                <%
+                	
+                }		
+                
+                %>
+            
             <tr>
                 <td>Rate per hour :</td>
                 <td><input type="text" name="price" id="price" disabled></td>

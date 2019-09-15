@@ -1,9 +1,12 @@
+package source;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import source.MyDatabaseConnection;
 
 public class CourseGateway {
 	private String name;
@@ -60,6 +63,21 @@ public class CourseGateway {
 		}
 		return courses;
 		
+		
+	}
+	
+	public static String listCoursesText() throws SQLException {
+		CourseGateway cg=new CourseGateway();
+		List<Course> courses=cg.listCourses();
+		Iterator iterator = courses.iterator();
+		int i=0;
+		String courseListString="";
+		while(iterator.hasNext()) {
+			Course c=courses.get(i);
+			courseListString=courseListString+c.getCourseId()+":"+c.getCourseName()+",";
+			i++;		
+		}
+		return courseListString;
 		
 	}
 	

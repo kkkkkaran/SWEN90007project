@@ -1,3 +1,4 @@
+package source;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,7 +71,7 @@ public class MyTutorDatabase implements TutorDatabase {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select * from student where username=? and password=?");
+			ps=conn.prepareStatement("select * from tutor where username=? and password=?");
 			ps.setString(1, username);
 			ps.setString(2, password);
 			
@@ -98,5 +99,39 @@ public class MyTutorDatabase implements TutorDatabase {
 		
 		return t;
 	}
+	public Tutor getTutorAtId(int id) {
+			
+	
+			Tutor t = new Tutor();
+			
+			try {
+				conn=MyDatabaseConnection.getConn();
+				ps=conn.prepareStatement("select * from tutor where id=?");
+				ps.setInt(1, id);
+				
+				ResultSet rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					t.setId(rs.getInt(1));
+					t.setUserName(rs.getString(2));
+					t.setPassWord(rs.getString(3));
+					t.setFirstName(rs.getString(4));
+					t.setLastName(rs.getString(5));
+					t.setDateOfBirth(rs.getString(6));
+					t.setAddress(rs.getString(7));
+					t.setPrice(rs.getString(8));
+					t.setEducation(rs.getString(10));
+					
+					
+					
+				}
+				
+			}catch(Exception e){
+				System.out.println(e);
+				
+			}
+			
+			return t;
+		}
 
 }

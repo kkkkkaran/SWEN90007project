@@ -1,5 +1,5 @@
 
-
+package source;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -47,7 +47,7 @@ public class ViewProfile extends HttpServlet {
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<head>");
-		out.println("<title> View Student Profile </title>");
+		out.println("<title> View Profile </title>");
 		out.println("</head>");
 		out.println("<body>");
 		out.println("<form action=\"ViewStudentProfile\" method=\"post\">");
@@ -62,9 +62,7 @@ public class ViewProfile extends HttpServlet {
 			t = mt.getTutor(username,password);
 			String[] subjectList = t.getSubjects();
 			String subjects = String.join(",", subjectList);
-			
-			out.println("<tr><td>Service Radius :</td><td><input type=\"text\" name=\"serviceRadius\" id=\"serviceRadius\" value=\""+t.getServiceRadius()+"\"></td> </tr>");
-			out.println("<tr> <td>Subject List :</td> <td><input type=\"text\" name=\"subjects\" id=\"subjects\" value=\""+subjects+"\"></td> </tr>");
+			out.println("<tr> <td>Subject List :</td> <td><input type=\"text\" name=\"subjects\" id=\"subjects\" value=\""+subjects+"\" disabled></td> </tr>");
 			out.println("<tr><td>Rate per hour :</td><td><input type=\"text\" name=\"price\" id=\"price\" value=\""+t.getPrice()+"\"></td></tr>");	
 		}
 		out.println("<tr><td>UserName :</td> <td><input type=\"text\" name=\"userName\" value=\""+ s.getUserName()+"\" disabled></td> </tr>");
@@ -98,8 +96,7 @@ public class ViewProfile extends HttpServlet {
 		String type = request.getParameter("type");
 		
 		if(type=="tutor") {
-			String serviceRadius = request.getParameter("serviceRadius");
-			String[] subjects = request.getParameter("subjects").split(",");
+			String[] subjects = request.getParameterValues("subjects");
 			String price = request.getParameter("price");
 			
 			Tutor t = td.getTutor(userName, passWord1);

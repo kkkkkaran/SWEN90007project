@@ -1,15 +1,9 @@
-
+package source;
 public class Tutor extends Member{
 	
-	private String serviceRadius;
+
 	private String[] subjects;
 	private String price;
-	public String getServiceRadius() {
-		return serviceRadius;
-	}
-	public void setServiceRadius(String serviceRadius) {
-		this.serviceRadius = serviceRadius;
-	}
 	public String[] getSubjects() {
 		return subjects;
 	}

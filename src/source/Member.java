@@ -1,4 +1,4 @@
-
+package source;
 public class Member {
 	private String userName;
 	private String passWord;

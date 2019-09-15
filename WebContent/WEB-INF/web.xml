@@ -32,12 +32,20 @@
     <url-pattern>/XMLServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>AdminServlet</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
     <servlet-mapping>
     <servlet-name>RegisterServlet</servlet-name>
     <url-pattern>/RegisterServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ViewProfile</servlet-name>
+    <url-pattern>/ViewProfile</url-pattern>
   </servlet-mapping>
 
 </web-app>
