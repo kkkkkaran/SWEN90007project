@@ -3,7 +3,7 @@ public class Tutor extends Member{
 	
 	private String serviceRadius;
 	private String[] subjects;
-	private int price;
+	private String price;
 	public String getServiceRadius() {
 		return serviceRadius;
 	}
@@ -16,10 +16,10 @@ public class Tutor extends Member{
 	public void setSubjects(String[] subjects) {
 		this.subjects = subjects;
 	}
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	

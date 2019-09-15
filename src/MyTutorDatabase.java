@@ -14,18 +14,15 @@ public class MyTutorDatabase implements TutorDatabase {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("insert into student values(?,?)");
-			ps.setString(1, t.getUserName());
-			ps.setString(2, t.getPassWord());
-			ps.setString(3, t.getFirstName());
-			ps.setString(4, t.getLastName());
-			ps.setString(5, t.getId());
+			ps=conn.prepareStatement("insert into tutor values(?,?)");
+			ps.setString(2, t.getUserName());
+			ps.setString(3, t.getPassWord());
+			ps.setString(4, t.getFirstName());
+			ps.setString(5, t.getLastName());
 			ps.setString(6, t.getDateOfBirth());
-			ps.setString(7, t.getEmail());
-			ps.setString(8, t.getEducation());
-			ps.setString(9, t.getRating());
-			ps.setString(10, t.getBookingHistory());
-			ps.setString(11, t.getAddress());
+			ps.setString(7, t.getAddress());
+			ps.setString(8, t.getPrice());
+			ps.setString(10, t.getEducation());
 
 			status=ps.executeUpdate();
 			conn.close();
@@ -36,6 +33,34 @@ public class MyTutorDatabase implements TutorDatabase {
 		}
 		return status;
 	}
+	
+	@Override
+	public int updateTutor(Tutor t) {
+		
+		int status = 0;
+		
+		try {
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("update tutor values(?,?) WHERE id="+t.getId());
+			ps.setString(2, t.getUserName());
+			ps.setString(3, t.getPassWord());
+			ps.setString(4, t.getFirstName());
+			ps.setString(5, t.getLastName());
+			ps.setString(6, t.getDateOfBirth());
+			ps.setString(7, t.getAddress());
+			ps.setString(8, t.getPrice());
+			ps.setString(10, t.getEducation());
+
+			status=ps.executeUpdate();
+			conn.close();
+			
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		return status;
+	}
+	
 
 	@Override
 	public Tutor getTutor(String username, String password) {
@@ -52,17 +77,17 @@ public class MyTutorDatabase implements TutorDatabase {
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				t.setUserName(rs.getString(1));
-				t.setPassWord(rs.getString(2));
-				t.setFirstName(rs.getString(3));
-				t.setLastName(rs.getString(4));
-				t.setId(rs.getString(5));
+				t.setId(rs.getInt(1));
+				t.setUserName(rs.getString(2));
+				t.setPassWord(rs.getString(3));
+				t.setFirstName(rs.getString(4));
+				t.setLastName(rs.getString(5));
 				t.setDateOfBirth(rs.getString(6));
-				t.setEmail(rs.getString(7));
-				t.setEducation(rs.getString(8));
-				t.setRating(rs.getString(9));
-				t.setBookingHistory(rs.getString(10));
-				t.setAddress(rs.getString(11));
+				t.setAddress(rs.getString(7));
+				t.setPrice(rs.getString(8));
+				t.setEducation(rs.getString(10));
+				
+				
 				
 			}
 			

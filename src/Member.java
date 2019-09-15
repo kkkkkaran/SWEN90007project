@@ -4,7 +4,7 @@ public class Member {
 	private String passWord;
 	private String firstName;
 	private String lastName;
-	private String id;
+	private int id;
 	private String dateOfBirth;
 	private String email;
 	private String education;
@@ -30,10 +30,10 @@ public class Member {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getEmail() {
