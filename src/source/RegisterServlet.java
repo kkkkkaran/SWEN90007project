@@ -54,15 +54,19 @@ public class RegisterServlet extends HttpServlet {
 		String type = request.getParameter("type");
 		
 		if(type=="tutor") {
-			String serviceRadius = request.getParameter("serviceRadius");
-			String[] subjects = request.getParameter("subjects").split(",");
+			String[] subjects = request.getParameterValues("subjects");
 			String price = request.getParameter("price");
 			
-			Tutor t = td.getTutor(userName, passWord1);
+			Tutor t = new Tutor();
 			if (passWord1.equals(passWord2)) {
 				t.setUserName(userName);
 				t.setPassWord(passWord1);
 				t.setFirstName(fname);
+				t.setLastName(lname);
+				t.setDateOfBirth(dob);
+				t.setAddress(address);
+				t.setSubjects(subjects);
+				t.setPrice(price);
 				td.insertTutor(t);
 				writer.println("Welcome, please login");
 				response.sendRedirect("login.jsp");
@@ -71,11 +75,14 @@ public class RegisterServlet extends HttpServlet {
 			}
 		}
 		else {
-			Student s = sd.getStudent(userName, passWord1);
+			Student s = new Student();
 			if (passWord1.equals(passWord2)) {
 				s.setUserName(userName);
 				s.setPassWord(passWord1);
 				s.setFirstName(fname);
+				s.setLastName(lname);
+				s.setDateOfBirth(dob);
+				s.setEducation(education);
 				sd.insertStudent(s);
 				writer.println("Welcome, please login");
 				response.sendRedirect("login.jsp");
