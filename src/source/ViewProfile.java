@@ -104,6 +104,11 @@ public class ViewProfile extends HttpServlet {
 				t.setUserName(userName);
 				t.setPassWord(passWord1);
 				t.setFirstName(fname);
+				t.setLastName(lname);
+				t.setDateOfBirth(dob);
+				t.setAddress(address);
+				t.setSubjects(subjects);
+				t.setPrice(price);
 				td.updateTutor(t);
 				writer.println("Welcome, please login");
 				response.sendRedirect("login.jsp");
@@ -117,6 +122,9 @@ public class ViewProfile extends HttpServlet {
 				s.setUserName(userName);
 				s.setPassWord(passWord1);
 				s.setFirstName(fname);
+				s.setLastName(lname);
+				s.setDateOfBirth(dob);
+				s.setEducation(education);
 				sd.updateStudent(s);
 				writer.println("Welcome, please login");
 				response.sendRedirect("login.jsp");
