@@ -1,4 +1,4 @@
-package source;
+package source.script;
 public class TutorListServlet {
 
 	

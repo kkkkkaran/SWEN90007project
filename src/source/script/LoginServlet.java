@@ -1,5 +1,5 @@
 
-package source;
+package source.script;
 import java.io.IOException;
 import java.io.PrintWriter;
 

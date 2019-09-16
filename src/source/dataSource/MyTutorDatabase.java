@@ -1,4 +1,4 @@
-package source;
+package source.dataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +13,9 @@ public class MyTutorDatabase implements TutorDatabase {
 	@Override
 	public int insertTutor(Tutor t) {
 		
+		
 		int status = 0;
+		
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
@@ -41,6 +43,14 @@ public class MyTutorDatabase implements TutorDatabase {
 	public int updateTutor(Tutor t) {
 		
 		int status = 0;
+		
+		String[] subjects = t.getSubjects();
+		TutorSubjectDatabase tsd = new TutorSubjectDatabase();
+		for(int i=0;i<subjects.length;i++) {
+			String[] splitted = subjects[i].split(":"); //format is id:subjectName
+			tsd.insertSubject(t.getId(), Integer.parseInt(splitted[0]));
+			
+		}
 		
 		try {
 			conn=MyDatabaseConnection.getConn();

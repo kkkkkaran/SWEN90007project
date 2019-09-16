@@ -1,4 +1,4 @@
-package source;
+package source.script;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,6 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import source.dataSource.MyStudentDatabase;
+import source.dataSource.MyTutorDatabase;
+import source.dataSource.StudentDatabase;
+import source.dataSource.TutorDatabase;
+import source.domain.Student;
 
 /**
  * Servlet implementation class RegisterServlet

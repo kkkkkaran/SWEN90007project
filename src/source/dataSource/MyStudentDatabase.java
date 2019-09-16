@@ -1,7 +1,9 @@
-package source;
+package source.dataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import source.domain.Student;
 
 public class MyStudentDatabase implements StudentDatabase {
 

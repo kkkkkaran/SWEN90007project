@@ -1,4 +1,4 @@
-package source;
+package source.domain;
 public class Course {
 	private int courseId;
 	private String courseName;

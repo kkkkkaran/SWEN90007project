@@ -1,4 +1,4 @@
-package source;
+package source.dataSource;
 public interface StudentDatabase {
 
 	public int insertStudent(Student s);

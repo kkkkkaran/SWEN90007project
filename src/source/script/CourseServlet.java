@@ -1,4 +1,4 @@
-package source;
+package source.script;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -9,6 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import source.dataSource.CourseGateway;
+import source.domain.Course;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -54,7 +57,7 @@ public class CourseServlet extends HttpServlet {
 				out.println("<tr><td>"+c.getCourseName()+"<input type=\"radio\" name=\"subjectSelection\" value=\""+c.getCourseName()+"\"></td></tr> ");
 				i++;		
 			}
-	        out.println("<tr><td><input type=\"submit\" value=\"Register\"></td><td><a href=\"homepage.jsp\">HomePage</a></td></tr>");
+	        out.println("<tr><td><input type=\"submit\" value=\"Go\"></td><td><a href=\"homepage.jsp\">HomePage</a></td></tr>");
 	        out.println("</table>");
 	        out.println("</form>");
 		} catch (SQLException e) {
