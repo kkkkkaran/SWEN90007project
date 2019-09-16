@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import source.MyDatabaseConnection;
+import source.dataSource.MyDatabaseConnection;
+import source.domain.Course;
 
 public class CourseGateway {
 	private String name;

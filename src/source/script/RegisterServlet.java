@@ -13,6 +13,7 @@ import source.dataSource.MyTutorDatabase;
 import source.dataSource.StudentDatabase;
 import source.dataSource.TutorDatabase;
 import source.domain.Student;
+import source.domain.Tutor;
 
 /**
  * Servlet implementation class RegisterServlet

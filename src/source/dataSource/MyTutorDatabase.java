@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 
+import source.domain.Tutor;
+
 public class MyTutorDatabase implements TutorDatabase {
 	
 	static HashMap<Integer, Tutor> tutorIdentityMap = new HashMap<Integer, Tutor>();
