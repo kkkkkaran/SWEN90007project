@@ -17,13 +17,13 @@ public class MyStudentDatabase implements StudentDatabase {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("insert into student values(?,?)");
-			ps.setString(2, s.getUserName());
-			ps.setString(3, s.getPassWord());
-			ps.setString(4, s.getFirstName());
-			ps.setString(5, s.getLastName());
-			ps.setString(6, s.getDateOfBirth());
-			ps.setString(7, s.getEducation());
+			ps=conn.prepareStatement("insert into student(username,password,firstname,lastname,yearofbirth,education) values(?,?,?,?,?,?)");
+			ps.setString(1, s.getUserName());
+			ps.setString(2, s.getPassWord());
+			ps.setString(3, s.getFirstName());
+			ps.setString(4, s.getLastName());
+			ps.setString(5, s.getDateOfBirth());
+			ps.setString(6, s.getEducation());
 			
 
 			status=ps.executeUpdate();
@@ -42,7 +42,8 @@ public int updateStudent(Student s) {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("update student values(?,?) WHERE id="+s.getId());
+			ps=conn.prepareStatement("update student values(?,?,?,?,?,?,?) WHERE id="+s.getId());
+			ps.setInt(1, s.getId());
 			ps.setString(2, s.getUserName());
 			ps.setString(3, s.getPassWord());
 			ps.setString(4, s.getFirstName());

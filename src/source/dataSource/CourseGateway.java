@@ -10,17 +10,15 @@ import source.dataSource.MyDatabaseConnection;
 import source.domain.Course;
 
 public class CourseGateway {
-	private String name;
-	private int id;
+	
 	static Connection conn;
 	static PreparedStatement ps;
-	public int insert() throws SQLException {
+	public int insert(String name) throws SQLException {
 		int status=0;
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("INSERT INTO subject VALUES(?,?)");
-			ps.setInt(1,id);
-			ps.setString(2, name);
+			ps=conn.prepareStatement("INSERT INTO subject(name) VALUES(?)");
+			ps.setString(1, name);
 			status=ps.executeUpdate();
 			conn.close();
 		
@@ -30,7 +28,7 @@ public class CourseGateway {
 		}
 		return status;
 	}
-	public int delete() throws SQLException {
+	public int delete(String name) throws SQLException {
 		int status=0;
 		try {
 			conn=MyDatabaseConnection.getConn();
@@ -70,7 +68,7 @@ public class CourseGateway {
 	public static String listCoursesText() throws SQLException {
 		CourseGateway cg=new CourseGateway();
 		List<Course> courses=cg.listCourses();
-		Iterator iterator = courses.iterator();
+		Iterator<Course> iterator = courses.iterator();
 		int i=0;
 		String courseListString="";
 		while(iterator.hasNext()) {

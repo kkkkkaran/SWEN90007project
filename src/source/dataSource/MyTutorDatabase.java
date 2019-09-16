@@ -21,15 +21,16 @@ public class MyTutorDatabase implements TutorDatabase {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("insert into tutor values(?,?)");
-			ps.setString(2, t.getUserName());
-			ps.setString(3, t.getPassWord());
-			ps.setString(4, t.getFirstName());
-			ps.setString(5, t.getLastName());
-			ps.setString(6, t.getDateOfBirth());
+			ps=conn.prepareStatement("insert into tutor(username,password,first name,lastname,yearofbirth,education,location,rateperhour) values(?,?,?,?,?,?,?)");
+			ps.setString(1, t.getUserName());
+			ps.setString(2, t.getPassWord());
+			ps.setString(3, t.getFirstName());
+			ps.setString(4, t.getLastName());
+			ps.setString(5, t.getDateOfBirth());
+			ps.setString(6, t.getEducation());
 			ps.setString(7, t.getAddress());
 			ps.setString(8, t.getPrice());
-			ps.setString(10, t.getEducation());
+			
 
 			status=ps.executeUpdate();
 			conn.close();
@@ -47,7 +48,7 @@ public class MyTutorDatabase implements TutorDatabase {
 		int status = 0;
 		
 		String[] subjects = t.getSubjects();
-		TutorSubjectDatabase tsd = new TutorSubjectDatabase();
+		TutorSubjectDatabase tsd = new MyTutorSubjectDatabase();
 		for(int i=0;i<subjects.length;i++) {
 			String[] splitted = subjects[i].split(":"); //format is id:subjectName
 			tsd.insertSubject(t.getId(), Integer.parseInt(splitted[0]));
@@ -56,7 +57,8 @@ public class MyTutorDatabase implements TutorDatabase {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("update tutor values(?,?) WHERE id="+t.getId());
+			ps=conn.prepareStatement("update tutor(id,username,password,first name,lastname,yearofbirth,education,location,rateperhour) values(?,?,?,?,?,?,?) WHERE id="+t.getId());
+			ps.setInt(1, t.getId());
 			ps.setString(2, t.getUserName());
 			ps.setString(3, t.getPassWord());
 			ps.setString(4, t.getFirstName());
@@ -98,9 +100,10 @@ public class MyTutorDatabase implements TutorDatabase {
 				t.setFirstName(rs.getString(4));
 				t.setLastName(rs.getString(5));
 				t.setDateOfBirth(rs.getString(6));
-				t.setAddress(rs.getString(7));
-				t.setPrice(rs.getString(8));
-				t.setEducation(rs.getString(10));
+				t.setEducation(rs.getString(7));
+				t.setAddress(rs.getString(8));
+				t.setPrice(rs.getString(9));
+				
 				
 				
 				

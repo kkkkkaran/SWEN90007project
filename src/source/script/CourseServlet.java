@@ -50,7 +50,7 @@ public class CourseServlet extends HttpServlet {
 			out.println("<body>");
 			out.println("<form action=\"ViewTutors\" method=\"post\">");
 			out.println("<table>");
-			Iterator iterator = courses.iterator();
+			Iterator<Course> iterator = courses.iterator();
 			int i=0;
 			while(iterator.hasNext()) {
 				Course c=courses.get(i);
