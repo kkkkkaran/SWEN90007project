@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -42,13 +47,27 @@ public class LoginServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String passWord = request.getParameter("passWord");
 		
-		if (userName.equals("a") && passWord.equals("1")) {
-			response.sendRedirect("welcome.jsp");
-		} else if (userName.equals("admin") && passWord.equals("123")){
+		if (userName.equals("admin") && passWord.equals("admin")) {
 			response.sendRedirect("dashboard.jsp");
-		} else{
-			writer.println("username or password does not exit");
-		}
+		} else {
+			try {
+			    Connection conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/", "postgres", "jie");
+			    PreparedStatement ps = conn.prepareStatement("select * from student where username=? and password=?");
+				ps.setString(1, userName);
+				ps.setString(2, passWord);
+				ResultSet rs = ps.executeQuery();
+				
+				if(rs.next()) {
+					response.sendRedirect("welcome.jsp");
+				} else {
+					writer.println("username or password does not exit");
+				}
+				
+			}catch(Exception e){
+				System.out.println(e);
+				
+			}
+	    }
 	}
 
 }
