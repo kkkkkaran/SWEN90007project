@@ -1,4 +1,5 @@
 package source.script;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -6,27 +7,25 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import source.dataSource.CourseGateway;
-import source.dataSource.MyTutorSubjectDatabase;
-import source.dataSource.TutorSubjectDatabase;
 import source.domain.Course;
-import source.domain.Tutor;
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class CourseMaintain
  */
 
-public class CourseServlet extends HttpServlet {
+public class CourseMaintain extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CourseServlet() {
+    public CourseMaintain() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +35,6 @@ public class CourseServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		CourseGateway cg=new CourseGateway();
 		
 		List<Course> courses;
@@ -48,19 +46,28 @@ public class CourseServlet extends HttpServlet {
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
 			out.println("<head>");
-			out.println("<title> View Course List </title>");
+			out.println("<title> Maintain Courses </title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<form action=\"CourseServlet\" method=\"post\">");
+			
+			out.println("<form action=\"CourseAdd\" method=\"post\">");
 			out.println("<table>");
+			out.println("<tr><td>Add Course:</td><td><input type=\"text\" name=\"subjectToAdd\"></td></tr>");
+			out.println("<tr><td><input type=\"submit\" value=\"Go\"></td></tr>");
+			out.println("</table>");
+	        out.println("</form>");
+	        
+			out.println("<form action=\"CourseMaintain\" method=\"post\">");
+			out.println("<table>");
+			out.println("<tr><td>Delete Courses</td></tr>");
 			Iterator<Course> iterator = courses.iterator();
 			int i=0;
 			while(iterator.hasNext()) {
 				Course c=courses.get(i);
-				out.println("<tr><td>"+c.getCourseName()+"<input type=\"radio\" name=\"subjectSelection\" value=\""+c.getCourseId()+"\"></td></tr> ");
+				out.println("<tr><td>"+c.getCourseName()+"<input type=\"checkbox\" name=\"subjectSelection\" value=\""+c.getCourseName()+"\"></td></tr> ");
 				i++;		
 			}
-	        out.println("<tr><td><input type=\"submit\" value=\"Go\"></td><td><a href=\"homepage.jsp\">HomePage</a></td></tr>");
+	        out.println("<tr><td><input type=\"submit\" value=\"Go\"></td></tr>");
 	        out.println("</table>");
 	        out.println("</form>");
 	        out.println("</body></html>");
@@ -68,40 +75,38 @@ public class CourseServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request, response);
+		CourseGateway cg=new CourseGateway();
+		String[] coursesToDelete = request.getParameterValues("subjectSelection");
 		PrintWriter out = response.getWriter();
-		TutorSubjectDatabase tsd = new MyTutorSubjectDatabase();
-		int courseId = Integer.parseInt(request.getParameter("subjectSelection"));
-		List<Tutor> tutorList = tsd.getTutorForCourse(courseId);
-		Iterator<Tutor> iterator = tutorList.iterator();
-		int i=0;
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<head>");
-		out.println("<title> View Course List </title>");
+		out.println("<title> Deleted Courses </title>");
 		out.println("</head>");
 		out.println("<body>");
-
-		out.println("<table>");
-		while(iterator.hasNext()) {
-			Tutor t=tutorList.get(i);
-			out.println("<tr><td>"+t.getFirstName()+"</td>"+" "+"<td>"+t.getAddress()+"</tr> ");
-			i++;		
-		}
-		out.println("</table>");
-		out.println("</body></html>");
-        
-		
+		if(coursesToDelete.length > 0) {
 			
-
+			for(int i=0;i<coursesToDelete.length;i++) {
+				try {
+					cg.delete(coursesToDelete[i]);
+					out.println(coursesToDelete[i]+" deleted");
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					out.println(coursesToDelete[i]+" delete unsuccessful");
+					e.printStackTrace();
+				}
+			}
+		}
+		out.println("</body></html>");
 		
 	}
 

@@ -34,8 +34,8 @@ public class ViewProfile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int userType=0;//static until sessions established
-		String username="admin";
+		int userType=0; //insert credentials for a registered user. Change user type to 1 for tutor profile
+		String username="admin"; 
 		String password="admin";
 		Member s;
 		Tutor t;
@@ -56,7 +56,7 @@ public class ViewProfile extends HttpServlet {
 		out.println("<title> View Profile </title>");
 		out.println("</head>");
 		out.println("<body>");
-		out.println("<form action=\"ViewStudentProfile\" method=\"post\">");
+		out.println("<form action=\"ViewProfile\" method=\"post\">");
 		out.println("<table>");
 		out.println("input type=\"hidden\" name=\"type\" value=\""+userType+"\"");
 		out.println("<tr><td>First Name :</td><td><input type=\"text\" name=\"fname\" value=\""+ s.getFirstName()+"\"></td></tr>");
@@ -93,7 +93,7 @@ public class ViewProfile extends HttpServlet {
 		
 		String userName = request.getParameter("userName");
 		String passWord1 = request.getParameter("passWord1");
-		String passWord2 = request.getParameter("passWord2");
+		
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
 		String dob = request.getParameter("dob");
@@ -106,37 +106,33 @@ public class ViewProfile extends HttpServlet {
 			String price = request.getParameter("price");
 			
 			Tutor t = td.getTutor(userName, passWord1);
-			if (passWord1.equals(passWord2)) {
-				t.setUserName(userName);
-				t.setPassWord(passWord1);
-				t.setFirstName(fname);
-				t.setLastName(lname);
-				t.setDateOfBirth(dob);
-				t.setAddress(address);
-				t.setSubjects(subjects);
-				t.setPrice(price);
-				td.updateTutor(t);
-				writer.println("Welcome, please login");
-				response.sendRedirect("login.jsp");
-			} else{
-				writer.println("password does not match");
-			}
+			
+			t.setUserName(userName);
+			t.setPassWord(passWord1);
+			t.setFirstName(fname);
+			t.setLastName(lname);
+			t.setDateOfBirth(dob);
+			t.setAddress(address);
+			t.setSubjects(subjects);
+			t.setPrice(price);
+			td.updateTutor(t);
+			writer.println("Done");
+			
+			
 		}
 		else {
 			Student s = sd.getStudent(userName, passWord1);
-			if (passWord1.equals(passWord2)) {
-				s.setUserName(userName);
-				s.setPassWord(passWord1);
-				s.setFirstName(fname);
-				s.setLastName(lname);
-				s.setDateOfBirth(dob);
-				s.setEducation(education);
-				sd.updateStudent(s);
-				writer.println("Welcome, please login");
-				response.sendRedirect("login.jsp");
-			} else{
-				writer.println("password does not match");
-			}
+			
+			s.setUserName(userName);
+			s.setPassWord(passWord1);
+			s.setFirstName(fname);
+			s.setLastName(lname);
+			s.setDateOfBirth(dob);
+			s.setEducation(education);
+			sd.updateStudent(s);
+			writer.println("Done");
+				
+			
 		}
 	}
 

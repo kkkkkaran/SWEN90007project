@@ -9,8 +9,7 @@
 <body>
     <h3>Welcome to Management System</h3>
     The time is now <%= new java.util.Date() %>
-    <a href="admin">Admin</a>
-    <a href="ViewProfile">View Profile</a>
+    <a href="CourseMaintain">Courses Maintenance</a>
     
     <a href="logout.jsp">Logout</a>
 </body>
