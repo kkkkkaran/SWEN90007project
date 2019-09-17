@@ -2,6 +2,10 @@ package source.script;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -61,45 +65,71 @@ public class RegisterServlet extends HttpServlet {
 		String type = request.getParameter("type");
 		
 		if(type=="tutor") {
+			
 			String[] subjects = request.getParameterValues("subjects");
 			String price = request.getParameter("price");
 			
 			Tutor t = new Tutor();
-			if (passWord1.equals(passWord2)) {
-				t.setUserName(userName);
-				t.setPassWord(passWord1);
-				t.setFirstName(fname);
-				t.setLastName(lname);
-				t.setDateOfBirth(dob);
-				t.setAddress(address);
-				t.setSubjects(subjects);
-				t.setPrice(price);
-				td.insertTutor(t);
-				writer.println("Welcome, please login");
-				response.sendRedirect("login.jsp");
+			
+			if (userName == null || userName.trim().length()==0) {
+				writer.println("error: username is invalid");
+			} else if (passWord1 == null || passWord2 == null || 
+					passWord1.trim().length()==0 && passWord2.trim().length()==0) {
+				writer.println("error: password is invalid");
+			} else if (passWord1.equals(passWord2)) {
+					t.setUserName(userName);
+					t.setPassWord(passWord1);
+					t.setFirstName(fname);
+					t.setLastName(lname);
+					t.setDateOfBirth(dob);
+					t.setAddress(address);
+					t.setSubjects(subjects);
+					t.setPrice(price);
+					td.insertTutor(t);
+					writer.println("Welcome, please login");
+					response.sendRedirect("login.jsp");
 			} else{
 				writer.println("password does not match");
 			}
 		}
 		else {
+			
 			Student s = new Student();
-			if (passWord1.equals(passWord2)) {
-				s.setUserName(userName);
-				s.setPassWord(passWord1);
-				s.setFirstName(fname);
-				s.setLastName(lname);
-				s.setDateOfBirth(dob);
-				s.setEducation(education);
-				sd.insertStudent(s);
-				writer.println("Welcome, please login");
-				response.sendRedirect("login.jsp");
-			} else{
-				writer.println("password does not match");
-			}
+			
+			if (userName == null || userName.trim().length()==0) {
+				writer.println("invalid username");
+			} else if (passWord1 == null || passWord2 == null || 
+					passWord1.trim().length()==0 && passWord2.trim().length()==0) {
+				writer.println("invalid password");
+			} else {
+				try {
+				    Connection conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/", "postgres", "jie");
+				    PreparedStatement ps = conn.prepareStatement("select * from student where username=? and password=?");
+					ps.setString(1, userName);
+					ps.setString(2, passWord1);
+					ResultSet rs = ps.executeQuery();
+					
+					if(rs.next()) {
+						writer.println("username existed");
+					} else if (passWord1.equals(passWord2)) {
+					s.setUserName(userName);
+					s.setPassWord(passWord1);
+					s.setFirstName(fname);
+					s.setLastName(lname);
+					s.setDateOfBirth(dob);
+					s.setEducation(education);
+					sd.insertStudent(s);
+					writer.println("Welcome, please login");
+					response.sendRedirect("login.jsp");
+					} else {
+						writer.println("password does not match");
+				    }
+			    } catch(Exception e){
+					System.out.println(e);
+				
+			    }
+	      }
+
 		}
-
-
-		
 	}
-
 }
