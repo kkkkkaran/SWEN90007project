@@ -18,6 +18,16 @@
                 <td><input type="password" name="passWord"></td>
             </tr>
             <tr>
+                <td>Login Type :</td>
+                <td>
+                	<select name="type" id="type">
+                	  <option  value="student" selected="selected" >Student</option>
+					  <option value="tutor" >Tutor</option>
+					  <option value="admin">Admin</option>
+					</select>
+				</td>
+            </tr>
+            <tr>
                 <td><input type="submit" value="Login"></td>
                 <td><a href="register.jsp">Registration</a></td>
                 <td><a href="homepage.jsp">HomePage</a></td>

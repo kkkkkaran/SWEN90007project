@@ -46,13 +46,14 @@ public class LoginServlet extends HttpServlet {
 		
 		String userName = request.getParameter("userName");
 		String passWord = request.getParameter("passWord");
+		String type = request.getParameter("type");
 		
-		if (userName.equals("admin") && passWord.equals("admin")) {
+		if (userName.equals("admin") && passWord.equals("admin") && type.equals("admin")) {
 			response.sendRedirect("dashboard.jsp");
 		} else {
 			try {
 			    Connection conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/", "postgres", "jie");
-			    PreparedStatement ps = conn.prepareStatement("select * from student where username=? and password=?");
+			    PreparedStatement ps = conn.prepareStatement("select * from "+type+" where username=? and password=?");
 				ps.setString(1, userName);
 				ps.setString(2, passWord);
 				ResultSet rs = ps.executeQuery();
