@@ -10,6 +10,8 @@ import java.util.List;
 import source.domain.Tutor;
 
 
+
+
 public class MyTutorDatabase implements TutorDatabase {
 	
 	static HashMap<Integer, Tutor> tutorIdentityMap = new HashMap<Integer, Tutor>();
@@ -46,6 +48,7 @@ public class MyTutorDatabase implements TutorDatabase {
 		}
 		return status;
 	}
+	
 	
 	@Override
 	public int updateTutor(Tutor t) {
@@ -103,6 +106,8 @@ public class MyTutorDatabase implements TutorDatabase {
 				t.setId(rs.getInt(1));
 				t.setUserName(rs.getString(2));
 				t.setPassWord(rs.getString(3));
+				
+				/*
 				t.setFirstName(rs.getString(4));
 				t.setLastName(rs.getString(5));
 				t.setDateOfBirth(rs.getString(6));
@@ -110,7 +115,7 @@ public class MyTutorDatabase implements TutorDatabase {
 				t.setAddress(rs.getString(8));
 				t.setPrice(rs.getString(9));
 				t.setApproved(rs.getBoolean(11));
-				
+				*/
 				
 				
 				
@@ -128,7 +133,12 @@ public class MyTutorDatabase implements TutorDatabase {
 			//identity map implementation
 			if(tutorIdentityMap.containsKey(id)) {
 				Tutor t=tutorIdentityMap.get(id);
-				return t;
+				if(t.getFirstName() != null) { //if contains full profile, and not partial due to lazy loading
+					return t;
+				}
+				else { //removing from hash map to fetch full item
+					tutorIdentityMap.remove(id);
+				}
 			}
 			Tutor t = new Tutor();
 			
@@ -162,6 +172,7 @@ public class MyTutorDatabase implements TutorDatabase {
 			tutorIdentityMap.put(id, t);
 			return t;
 		}
+	
 	public List<Tutor> listUnapprovedTutors() throws SQLException{
 		List<Tutor> tutors = new ArrayList<>();
 		try {
@@ -234,6 +245,12 @@ public class MyTutorDatabase implements TutorDatabase {
 			ps=conn.prepareStatement("delete from tutor WHERE id="+t.getId());
 			status=ps.executeUpdate();
 			conn.close();
+			int id=t.getId();
+			
+			//delete from identity map
+			if(tutorIdentityMap.containsKey(t.getId())) {
+				tutorIdentityMap.remove(id);
+			}
 			
 		}catch(Exception e){
 			System.out.println(e);

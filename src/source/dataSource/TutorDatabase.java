@@ -13,6 +13,7 @@ public interface TutorDatabase {
 	public List<Tutor> listUnapprovedTutors() throws SQLException;
 	public List<Tutor> listAllTutors() throws SQLException;
 	int deleteTutor(Tutor t);
+	Tutor lazyLoadedTutor(Tutor t);
 
 
 }
