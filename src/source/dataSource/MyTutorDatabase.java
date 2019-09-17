@@ -128,6 +128,40 @@ public class MyTutorDatabase implements TutorDatabase {
 		tutorIdentityMap.put(t.getId(), t);
 		return t;
 	}
+	
+	
+	@Override
+	public Tutor lazyLoadedTutor(Tutor t) {	
+		try {
+			
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("select (first name,lastname,yearofbirth,education,location,rateperhour,approved) from tutor where id=?;");
+			ps.setInt(1, t.getId());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				t.setFirstName(rs.getString(4));
+				t.setLastName(rs.getString(5));
+				t.setDateOfBirth(rs.getString(6));
+				t.setEducation(rs.getString(7));
+				t.setAddress(rs.getString(8));
+				t.setPrice(rs.getString(9));
+				t.setApproved(rs.getBoolean(11));
+				
+				
+				
+			}
+			
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		tutorIdentityMap.replace(t.getId(), t); //Updated object inserted in identity map
+		return t;
+		
+		
+	}
 	public Tutor getTutorAtId(int id) {
 			
 			//identity map implementation
@@ -136,8 +170,9 @@ public class MyTutorDatabase implements TutorDatabase {
 				if(t.getFirstName() != null) { //if contains full profile, and not partial due to lazy loading
 					return t;
 				}
-				else { //removing from hash map to fetch full item
-					tutorIdentityMap.remove(id);
+				else { //fetching rest of tutor profile, implementing lazy load
+					TutorDatabase td = new MyTutorDatabase();
+					return td.lazyLoadedTutor(t);
 				}
 			}
 			Tutor t = new Tutor();

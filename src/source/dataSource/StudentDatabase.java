@@ -13,5 +13,6 @@ public interface StudentDatabase {
 	List<Student> listAllStudents() throws SQLException;
 	public int deleteStudent(Student s);
 	Student getStudentAtId(int id);
+	public Student lazyLoadedStudent(Student s);
 	
 }

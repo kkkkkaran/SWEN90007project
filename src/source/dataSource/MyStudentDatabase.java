@@ -4,14 +4,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import source.domain.Student;
+
 
 public class MyStudentDatabase implements StudentDatabase {
 
 	static Connection conn;
 	static PreparedStatement ps;
+	static HashMap<Integer, Student> studentIdentityMap = new HashMap<Integer, Student>();
 	
 	@Override
 	public int insertStudent(Student s) {
@@ -66,8 +69,6 @@ public int updateStudent(Student s) {
 
 	@Override
 	public Student getStudent(String username, String password) {
-		
-
 		Student s = new Student();
 		
 		try {
@@ -82,17 +83,20 @@ public int updateStudent(Student s) {
 				s.setId(rs.getInt(1));
 				s.setUserName(rs.getString(2));
 				s.setPassWord(rs.getString(3));
+				/*
+				 Fields left out for lazy load
 				s.setFirstName(rs.getString(4));
 				s.setLastName(rs.getString(5));
 				s.setDateOfBirth(rs.getString(6));
 				s.setEducation(rs.getString(7));
+				*/
 			}
 			
 		}catch(Exception e){
 			System.out.println(e);
 			
 		}
-		
+		studentIdentityMap.put(s.getId(), s);
 		return s;
 	}
 	
@@ -142,14 +146,54 @@ public int updateStudent(Student s) {
 			System.out.println(e);
 			
 		}
+		if(studentIdentityMap.containsKey(s.getId())) {
+			studentIdentityMap.remove(s.getId());
+		}
 		return status;
+		
+	}
+	
+	
+	public Student lazyLoadedStudent(Student s) {	
+		
+		try {
+			
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("select (firstname,lastname,yearofbirth,education) student where id=?;");
+			ps.setInt(1, s.getId());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				s.setFirstName(rs.getString(4));
+				s.setLastName(rs.getString(5));
+				s.setDateOfBirth(rs.getString(6));
+				s.setEducation(rs.getString(7));
+			}
+			
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		studentIdentityMap.replace(s.getId(), s); //Updated object inserted in identity map
+		return s;
+		
 		
 	}
 	
 	@Override
 	public Student getStudentAtId(int id) {
-		
-		
+		//identity map implementation
+		if(studentIdentityMap.containsKey(id)) {
+			Student s=studentIdentityMap.get(id);
+			if(s.getFirstName() != null) { //if contains full profile, and not partial due to lazy loading
+				return s;
+			}
+			else { //fetching rest of student profile, implementing lazy load
+				StudentDatabase sd = new MyStudentDatabase();
+				return sd.lazyLoadedStudent(s);
+			}
+		}
 		Student s = new Student();
 		
 		try {
