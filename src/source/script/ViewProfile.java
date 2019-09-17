@@ -61,9 +61,9 @@ public class ViewProfile extends HttpServlet {
 		out.println("input type=\"hidden\" name=\"type\" value=\""+userType+"\"");
 		out.println("<tr><td>First Name :</td><td><input type=\"text\" name=\"fname\" value=\""+ s.getFirstName()+"\"></td></tr>");
 		out.println("<tr><td>Last Name :</td><td><input type=\"text\" name=\"lname\" value=\""+ s.getLastName()+"\"></td></tr>");
-		out.println("<tr><td>Date of Birth (DD/MM/YYYY):</td><td><input type=\"text\" name=\"dob\" value=\""+ s.getFirstName()+"\"></td></tr>");
+		out.println("<tr><td>Year of Birth (YYYY):</td><td><input type=\"text\" name=\"dob\" value=\""+ s.getFirstName()+"\"></td></tr>");
 		out.println("<tr><td>Education :</td><td><input type=\"text\" name=\"education\" value=\""+ s.getDateOfBirth()+"\"></td></tr>");
-		out.println("<tr><td>Address :</td><td><input type=\"text\" name=\"address\" value=\""+ s.getAddress()+"\"></td></tr>");
+		out.println("<tr><td>Location :</td><td><input type=\"text\" name=\"address\" value=\""+ s.getAddress()+"\"></td></tr>");
 		if(userType == 1) { //printing tutor specific fields
 			t = mt.getTutor(username,password);
 			String[] subjectList = t.getSubjects();

@@ -41,7 +41,7 @@
                 <td><input type="text" name="lname"></td>
             </tr>
             <tr>
-                <td>Date of Birth (DD/MM/YYYY):</td>
+                <td>Year of Birth (YYYY):</td>
                 <td><input type="text" name="dob"></td>
             </tr>
             <tr>
@@ -49,7 +49,7 @@
                 <td><input type="text" name="education"></td>
             </tr>
             <tr>
-                <td>Address :</td>
+                <td>Location :</td>
                 <td><input type="text" name="address"></td>
             </tr>
         	<tr>
@@ -61,25 +61,27 @@
 					</select>
 				</td>
             </tr>
+            <%  /*
             <tr>
                 <td>Subject List :</td></tr>
-                <%
+                
                 	
                 	String courses = CourseGateway.listCoursesText();
                 	String[] courseList = courses.split(",");
                 	for (int i=0;i<courseList.length;i++){
                 		pageContext.setAttribute("test", courseList[i]);		
                 
-                %>
+                
                 
                 <tr><td><input type="checkbox" name="subjects" id="subjects" value="${test}" disabled></td></tr>
-                <%
+                
                 	
                 }		
                 
-                %>
+                
             
-            <tr>
+            <tr> */
+            %>
                 <td>Rate per hour :</td>
                 <td><input type="text" name="price" id="price" disabled></td>
             </tr>
