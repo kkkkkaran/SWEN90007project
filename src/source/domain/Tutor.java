@@ -4,6 +4,7 @@ public class Tutor extends Member{
 
 	private String[] subjects;
 	private String price;
+	private boolean approved;
 	public String[] getSubjects() {
 		return subjects;
 	}
@@ -15,6 +16,12 @@ public class Tutor extends Member{
 	}
 	public void setPrice(String price) {
 		this.price = price;
+	}
+	public boolean getApproved() {
+		return approved;
+	}
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 	
 

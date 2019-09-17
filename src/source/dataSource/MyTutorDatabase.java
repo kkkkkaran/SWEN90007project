@@ -2,9 +2,13 @@ package source.dataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import source.domain.Tutor;
+
 
 public class MyTutorDatabase implements TutorDatabase {
 	
@@ -21,7 +25,7 @@ public class MyTutorDatabase implements TutorDatabase {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("insert into tutor(username,password,first name,lastname,yearofbirth,education,location,rateperhour) values(?,?,?,?,?,?,?)");
+			ps=conn.prepareStatement("insert into tutor(username,password,first name,lastname,yearofbirth,education,location,rateperhour,approved) values(?,?,?,?,?,?,?,?)");
 			ps.setString(1, t.getUserName());
 			ps.setString(2, t.getPassWord());
 			ps.setString(3, t.getFirstName());
@@ -30,6 +34,7 @@ public class MyTutorDatabase implements TutorDatabase {
 			ps.setString(6, t.getEducation());
 			ps.setString(7, t.getAddress());
 			ps.setString(8, t.getPrice());
+			ps.setBoolean(9, t.getApproved());
 			
 
 			status=ps.executeUpdate();
@@ -57,16 +62,17 @@ public class MyTutorDatabase implements TutorDatabase {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("update tutor(id,username,password,first name,lastname,yearofbirth,education,location,rateperhour) values(?,?,?,?,?,?,?) WHERE id="+t.getId());
+			ps=conn.prepareStatement("update tutor(id,username,password,first name,lastname,yearofbirth,education,location,rateperhour,approved) values(?,?,?,?,?,?,?,?,?,?) WHERE id="+t.getId());
 			ps.setInt(1, t.getId());
 			ps.setString(2, t.getUserName());
 			ps.setString(3, t.getPassWord());
 			ps.setString(4, t.getFirstName());
 			ps.setString(5, t.getLastName());
 			ps.setString(6, t.getDateOfBirth());
-			ps.setString(7, t.getAddress());
-			ps.setString(8, t.getPrice());
-			ps.setString(10, t.getEducation());
+			ps.setString(7, t.getEducation());
+			ps.setString(8, t.getAddress());
+			ps.setString(9, t.getPrice());
+			ps.setBoolean(10, t.getApproved());
 
 			status=ps.executeUpdate();
 			conn.close();
@@ -103,6 +109,7 @@ public class MyTutorDatabase implements TutorDatabase {
 				t.setEducation(rs.getString(7));
 				t.setAddress(rs.getString(8));
 				t.setPrice(rs.getString(9));
+				t.setApproved(rs.getBoolean(11));
 				
 				
 				
@@ -127,7 +134,7 @@ public class MyTutorDatabase implements TutorDatabase {
 			
 			try {
 				conn=MyDatabaseConnection.getConn();
-				ps=conn.prepareStatement("select * from tutor where id=?");
+				ps=conn.prepareStatement("select * from tutor where id=? and approved=TRUE;");
 				ps.setInt(1, id);
 				
 				ResultSet rs = ps.executeQuery();
@@ -139,9 +146,10 @@ public class MyTutorDatabase implements TutorDatabase {
 					t.setFirstName(rs.getString(4));
 					t.setLastName(rs.getString(5));
 					t.setDateOfBirth(rs.getString(6));
-					t.setAddress(rs.getString(7));
-					t.setPrice(rs.getString(8));
-					t.setEducation(rs.getString(10));
+					t.setEducation(rs.getString(7));
+					t.setAddress(rs.getString(8));
+					t.setPrice(rs.getString(9));
+					t.setApproved(rs.getBoolean(11));
 					
 					
 					
@@ -154,6 +162,86 @@ public class MyTutorDatabase implements TutorDatabase {
 			tutorIdentityMap.put(id, t);
 			return t;
 		}
+	public List<Tutor> listUnapprovedTutors() throws SQLException{
+		List<Tutor> tutors = new ArrayList<>();
+		try {
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("SELECT * FROM tutor where approved=FALSE;");
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Tutor t = new Tutor();
+				t.setId(rs.getInt(1));
+				t.setUserName(rs.getString(2));
+				t.setPassWord(rs.getString(3));
+				t.setFirstName(rs.getString(4));
+				t.setLastName(rs.getString(5));
+				t.setDateOfBirth(rs.getString(6));
+				t.setEducation(rs.getString(7));
+				t.setAddress(rs.getString(8));
+				t.setPrice(rs.getString(9));
+				t.setApproved(false);
+				tutors.add(t);
+				
+				
+			}
+			
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		return tutors;
+		
+		
+	}
+	public List<Tutor> listAllTutors() throws SQLException{
+		List<Tutor> tutors = new ArrayList<>();
+		try {
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("SELECT * FROM tutor;");
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Tutor t = new Tutor();
+				t.setId(rs.getInt(1));
+				t.setUserName(rs.getString(2));
+				t.setPassWord(rs.getString(3));
+				t.setFirstName(rs.getString(4));
+				t.setLastName(rs.getString(5));
+				t.setDateOfBirth(rs.getString(6));
+				t.setEducation(rs.getString(7));
+				t.setAddress(rs.getString(8));
+				t.setPrice(rs.getString(9));
+				tutors.add(t);
+				
+				
+			}
+			
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		return tutors;
+		
+		
+	}
+	
+	public int deleteTutor(Tutor t) {
+		int status = 0;
+		
+		try {
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("delete from tutor WHERE id="+t.getId());
+			status=ps.executeUpdate();
+			conn.close();
+			
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		return status;
+		
+	}
 		
 		
 

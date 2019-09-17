@@ -60,6 +60,24 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>ApproveTutors</servlet-name>
+    <servlet-class>source.script.ApproveTutors</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApproveTutors</servlet-name>
+    <url-pattern>/ApproveTutors</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>DeleteProfiles</servlet-name>
+    <servlet-class>source.script.DeleteProfiles</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteProfiles</servlet-name>
+    <url-pattern>/DeleteProfiles</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>ViewProfileServlet</servlet-name>
     <servlet-class>source.script.ViewProfile</servlet-class>
   </servlet>

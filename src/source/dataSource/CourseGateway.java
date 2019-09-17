@@ -43,6 +43,7 @@ public class CourseGateway {
 		}
 		return status;
 	}
+	
 	public List<Course> listCourses() throws SQLException{
 		List<Course> courses = new ArrayList<>();
 		try {
