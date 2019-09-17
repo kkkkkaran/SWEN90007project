@@ -64,6 +64,7 @@ public int updateStudent(Student s) {
 			System.out.println(e);
 			
 		}
+		studentIdentityMap.replace(s.getId(), s); //Updated object inserted in identity map
 		return status;
 	}
 

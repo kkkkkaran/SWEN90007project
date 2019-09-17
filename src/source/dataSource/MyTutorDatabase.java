@@ -84,6 +84,7 @@ public class MyTutorDatabase implements TutorDatabase {
 			System.out.println(e);
 			
 		}
+		tutorIdentityMap.replace(t.getId(), t);
 		return status;
 	}
 	
