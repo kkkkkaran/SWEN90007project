@@ -2,6 +2,10 @@ package source.script;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -93,11 +97,21 @@ public class RegisterServlet extends HttpServlet {
 			Student s = new Student();
 			
 			if (userName == null || userName.trim().length()==0) {
-				writer.println("error: username is invalid");
+				writer.println("invalid username");
 			} else if (passWord1 == null || passWord2 == null || 
 					passWord1.trim().length()==0 && passWord2.trim().length()==0) {
-				writer.println("error: password is invalid");
-			} else if (passWord1.equals(passWord2)) {
+				writer.println("invalid password");
+			} else {
+				try {
+				    Connection conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/", "postgres", "jie");
+				    PreparedStatement ps = conn.prepareStatement("select * from student where username=? and password=?");
+					ps.setString(1, userName);
+					ps.setString(2, passWord1);
+					ResultSet rs = ps.executeQuery();
+					
+					if(rs.next()) {
+						writer.println("username existed");
+					} else if (passWord1.equals(passWord2)) {
 					s.setUserName(userName);
 					s.setPassWord(passWord1);
 					s.setFirstName(fname);
@@ -107,13 +121,15 @@ public class RegisterServlet extends HttpServlet {
 					sd.insertStudent(s);
 					writer.println("Welcome, please login");
 					response.sendRedirect("login.jsp");
-			} else {
-				writer.println("password does not match");
-			}
+					} else {
+						writer.println("password does not match");
+				    }
+			    } catch(Exception e){
+					System.out.println(e);
+				
+			    }
+	      }
+
 		}
-
-
-		
 	}
-
 }
