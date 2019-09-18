@@ -18,7 +18,7 @@ public class CourseMapper {
 		int status=0;
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("INSERT INTO subject(name) VALUES(?)");
+			ps=conn.prepareStatement("INSERT INTO course(name) VALUES(?)");
 			ps.setString(1, name);
 			status=ps.executeUpdate();
 			conn.close();
@@ -33,7 +33,7 @@ public class CourseMapper {
 		int status=0;
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("DELETE FROM subject WHERE name=?;");
+			ps=conn.prepareStatement("DELETE FROM course WHERE name=?;");
 			ps.setString(1, name);
 			status=ps.executeUpdate();
 			conn.close();
@@ -49,7 +49,7 @@ public class CourseMapper {
 		List<Course> courses = new ArrayList<>();
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("SELECT * FROM subject;");
+			ps=conn.prepareStatement("SELECT * FROM course;");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Course c = new Course();

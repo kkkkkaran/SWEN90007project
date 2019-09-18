@@ -91,6 +91,7 @@ public class RegisterServlet extends HttpServlet {
 						t.setFirstName(fname);
 						t.setLastName(lname);
 						t.setDateOfBirth(dob);
+						t.setEducation(education);
 						t.setAddress(address);
 						//t.setSubjects(subjects);
 						t.setPrice(price);
