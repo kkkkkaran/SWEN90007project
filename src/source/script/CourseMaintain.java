@@ -3,7 +3,7 @@ package source.script;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Iterator;
+
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -59,15 +59,12 @@ public class CourseMaintain extends HttpServlet {
 			out.println("<form action=\"CourseMaintain\" method=\"post\">");
 			out.println("<table>");
 			out.println("<tr><td>Delete Courses</td></tr>");
-			Iterator<Course> iterator = courses.iterator();
-			int i=0;
-			while(iterator.hasNext()) {
+			
+			for(int i=0;i<courses.size();i++) {
 				Course c=courses.get(i);
 				if(!c.getCourseName().isEmpty()) {
 					out.println("<tr><td>"+c.getCourseName()+"<input type=\"checkbox\" name=\"subjectSelection\" value=\""+c.getCourseName()+"\"></td></tr>");
-				}
-				
-				i++;		
+				}	
 			}
 	        out.println("<tr><td><input type=\"submit\" value=\"Go\"></td></tr>");
 	        out.println("</table>");

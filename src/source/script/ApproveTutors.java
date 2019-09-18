@@ -3,7 +3,7 @@ package source.script;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Iterator;
+
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -42,8 +42,6 @@ public class ApproveTutors extends HttpServlet {
 		List<Tutor> tutorList;
 		try {
 			tutorList = ti.listUnapprovedTutors();
-			Iterator<Tutor> iterator = tutorList.iterator();
-			int i=0;
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
 			out.println("<head>");
@@ -52,11 +50,17 @@ public class ApproveTutors extends HttpServlet {
 			out.println("<body>");
 			out.println("<form action=\"ApproveTutors\" method=\"post\">");
 			out.println("<table>");
-			while(iterator.hasNext()) {
+			/* Test Data 
+			Tutor tt=new Tutor();
+			tt.setFirstName("abcd");
+			tt.setAddress("defg");
+			tt.setId(1234);
+			tutorList.add(tt);
+			*/
+			for(int i=0;i<tutorList.size();i++) {
 				Tutor t=tutorList.get(i);
 				out.println("<tr><td>"+t.getFirstName()+"</td>"+" "+"<td>"+t.getAddress());
-				out.println("</td><td><input type=\"checkbox\" name=\"approve\" value=\""+t.getId()+"\"</td> </tr> ");
-				i++;		
+				out.println("</td><td><input type=\"checkbox\" name=\"approve\" value=\""+t.getId()+"\"</td> </tr> ");		
 			}
 		 	out.println("<tr><td><input type=\"submit\" value=\"Go\"></td></tr>");
 	        out.println("</table>");
