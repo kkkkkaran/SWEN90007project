@@ -23,7 +23,7 @@ public class TutorMapper {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("insert into tutor(username,password,first name,lastname,yearofbirth,education,location,rateperhour,approved) values(?,?,?,?,?,?,?,?)");
+			ps=conn.prepareStatement("insert into tutor(username,password,firstname,lastname,yearofbirth,education,location,rateperhour,approved) values(?,?,?,?,?,?,?,?,?)");
 			ps.setString(1, t.getUserName());
 			ps.setString(2, t.getPassWord());
 			ps.setString(3, t.getFirstName());
@@ -58,7 +58,7 @@ public class TutorMapper {
 		}
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("update tutor(id,username,password,first name,lastname,yearofbirth,education,location,rateperhour,approved) values(?,?,?,?,?,?,?,?,?,?) WHERE id="+t.getId());
+			ps=conn.prepareStatement("update tutor(idtutor,username,password,firstname,lastname,yearofbirth,education,location,rateperhour,approved) values(?,?,?,?,?,?,?,?,?,?) WHERE idtutor="+t.getId());
 			ps.setInt(1, t.getId());
 			ps.setString(2, t.getUserName());
 			ps.setString(3, t.getPassWord());
@@ -129,7 +129,7 @@ public class TutorMapper {
 		try {
 			
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select (first name,lastname,yearofbirth,education,location,rateperhour,approved) from tutor where id=?;");
+			ps=conn.prepareStatement("select (firstname,lastname,yearofbirth,education,location,rateperhour,approved) from tutor where idtutor=?;");
 			ps.setInt(1, t.getId());
 			
 			ResultSet rs = ps.executeQuery();
@@ -162,7 +162,7 @@ public class TutorMapper {
 			
 			try {
 				conn=MyDatabaseConnection.getConn();
-				ps=conn.prepareStatement("select * from tutor where id=? and approved=TRUE;");
+				ps=conn.prepareStatement("select * from tutor where idtutor=? and approved=TRUE;");
 				ps.setInt(1, id);
 				
 				ResultSet rs = ps.executeQuery();
@@ -260,7 +260,7 @@ public class TutorMapper {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("delete from tutor WHERE id="+t.getId());
+			ps=conn.prepareStatement("delete from tutor WHERE idtutor="+t.getId());
 			status=ps.executeUpdate();
 			conn.close();
 			

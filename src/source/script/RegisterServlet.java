@@ -66,7 +66,7 @@ public class RegisterServlet extends HttpServlet {
 		
 		if(type.equals("tutor")) {
 			
-			String[] subjects = request.getParameterValues("subjects");
+			//String[] subjects = request.getParameterValues("subjects");
 			String price = request.getParameter("price");
 			
 			Tutor t = new Tutor();
@@ -92,7 +92,7 @@ public class RegisterServlet extends HttpServlet {
 						t.setLastName(lname);
 						t.setDateOfBirth(dob);
 						t.setAddress(address);
-						t.setSubjects(subjects);
+						//t.setSubjects(subjects);
 						t.setPrice(price);
 						td.insertTutor(t);
 					writer.println("Welcome, please login");

@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import source.DataMappers.MyDatabaseConnection;
+import source.domain.Student;
+import source.domain.Tutor;
+import source.services.StudentInterface;
+import source.services.StudentService;
+import source.services.TutorInterface;
+import source.services.TutorService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * Servlet implementation class LoginServlet
@@ -44,30 +46,34 @@ public class LoginServlet extends HttpServlet {
 		
 		PrintWriter writer = response.getWriter();
 		doGet(request, response);
-		
+		TutorInterface ts=new TutorService();
+		StudentInterface ss=new StudentService();
 		String userName = request.getParameter("userName");
 		String passWord = request.getParameter("passWord");
 		String type = request.getParameter("type");
 		
 		if (userName.equals("admin") && passWord.equals("admin") && type.equals("admin")) {
 			response.sendRedirect("dashboard.jsp");
-		} else {
-			try {			
-				Connection conn = MyDatabaseConnection.getConn();
-			    PreparedStatement ps = conn.prepareStatement("select * from "+type+" where username=? and password=?");
-				ps.setString(1, userName);
-				ps.setString(2, passWord);
-				ResultSet rs = ps.executeQuery();
-				
-				if(rs.next()) {
-					response.sendRedirect("welcome.jsp");
-				} else {
+		} 
+		else {
+			if(type.equals("tutor")) {
+				Tutor t=ts.getTutor(userName, passWord);
+				if(t.getUserName().equals(null)) {
 					writer.println("username or password does not exit");
 				}
+				else {
+					response.sendRedirect("welcome.jsp");
+				}
 				
-			}catch(Exception e){
-				System.out.println(e);
-				
+			}
+			else if(type.equals("student")) {
+				Student s = ss.getStudent(userName, passWord);
+				if(s.getUserName().equals(null)) {
+					writer.println("username or password does not exit");
+				}
+				else {
+					response.sendRedirect("welcome.jsp");
+				}
 			}
 	    }
 	}

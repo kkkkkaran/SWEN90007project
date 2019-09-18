@@ -47,7 +47,7 @@ public Student updateStudent(Student s) {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("update student values(?,?,?,?,?,?,?) WHERE id="+s.getId());
+			ps=conn.prepareStatement("update student values(?,?,?,?,?,?,?) WHERE idstudent="+s.getId());
 			ps.setInt(1, s.getId());
 			ps.setString(2, s.getUserName());
 			ps.setString(3, s.getPassWord());
@@ -138,7 +138,7 @@ public Student updateStudent(Student s) {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("delete from student WHERE id="+s.getId());
+			ps=conn.prepareStatement("delete from student WHERE idstudent="+s.getId());
 			status=ps.executeUpdate();
 			conn.close();
 			
@@ -157,7 +157,7 @@ public Student updateStudent(Student s) {
 		try {
 			
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select (firstname,lastname,yearofbirth,education) student where id=?;");
+			ps=conn.prepareStatement("select (firstname,lastname,yearofbirth,education) from student where idstudent=?;");
 			ps.setInt(1, s.getId());
 			
 			ResultSet rs = ps.executeQuery();
@@ -185,7 +185,7 @@ public Student updateStudent(Student s) {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select * from student where id=?;");
+			ps=conn.prepareStatement("select * from student where idstudent=?;");
 			ps.setInt(1, id);
 			
 			ResultSet rs = ps.executeQuery();

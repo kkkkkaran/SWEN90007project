@@ -21,7 +21,7 @@ public class TutorCourseMapper {
 			
 			try {
 				conn=MyDatabaseConnection.getConn();
-				ps=conn.prepareStatement("insert into tutor_has_subject values(?,?)");
+				ps=conn.prepareStatement("insert into tutor_has_course values(?,?)");
 				ps.setInt(1, tutorId);
 				ps.setInt(2, subjectId);
 				status=ps.executeUpdate();
@@ -40,7 +40,7 @@ public class TutorCourseMapper {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("delete from tutor_has_subject where subject_idsubject=?");
+			ps=conn.prepareStatement("delete from tutor_has_course where course_idcourse=?");
 			ps.setInt(1, subjectId);
 			status=ps.executeUpdate();
 			conn.close();
@@ -53,13 +53,12 @@ public class TutorCourseMapper {
 		
 	}
 	
-	
 	public int deleteSubject(int tutorId,int subjectId) {
 		int status = 0;
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("delete from tutor_has_subject where subject_idsubject=? and tutor_idtutor=?");
+			ps=conn.prepareStatement("delete from tutor_has_course where course_idcourse=? and tutor_idtutor=?");
 			ps.setInt(1, subjectId);
 			ps.setInt(2, tutorId);
 			status=ps.executeUpdate();
@@ -79,7 +78,7 @@ public class TutorCourseMapper {
 		try {
 			
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select tutor_idtutor from tutor_has_subject where subject_idsubject=(?)");
+			ps=conn.prepareStatement("select tutor_idtutor from tutor_has_course where course_idcourse=(?)");
 			ps.setInt(1, courseId);
 			ResultSet rs = ps.executeQuery();
 			
