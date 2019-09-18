@@ -63,7 +63,10 @@ public class CourseMaintain extends HttpServlet {
 			int i=0;
 			while(iterator.hasNext()) {
 				Course c=courses.get(i);
-				out.println("<tr><td>"+c.getCourseName()+"<input type=\"checkbox\" name=\"subjectSelection\" value=\""+c.getCourseName()+"\"></td></tr> ");
+				if(!c.getCourseName().isEmpty()) {
+					out.println("<tr><td>"+c.getCourseName()+"<input type=\"checkbox\" name=\"subjectSelection\" value=\""+c.getCourseName()+"\"></td></tr>");
+				}
+				
 				i++;		
 			}
 	        out.println("<tr><td><input type=\"submit\" value=\"Go\"></td></tr>");
