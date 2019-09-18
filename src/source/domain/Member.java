@@ -30,7 +30,6 @@ public class Member extends DomainObject{
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	@Override
 	public int getId() {
 		return id;
 	}

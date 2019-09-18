@@ -3,7 +3,6 @@ package source.script;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import source.DataMappers.MyDatabaseConnection;
 import source.domain.Student;
 import source.domain.Tutor;
 import source.services.StudentService;
@@ -64,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
 		String address = request.getParameter("address");
 		String type = request.getParameter("type");
 		
-		if(type=="tutor") {
+		if(type.equals("tutor")) {
 			
 			String[] subjects = request.getParameterValues("subjects");
 			String price = request.getParameter("price");
@@ -72,25 +72,39 @@ public class RegisterServlet extends HttpServlet {
 			Tutor t = new Tutor();
 			
 			if (userName == null || userName.trim().length()==0) {
-				writer.println("error: username is invalid");
+				writer.println("invalid username");
 			} else if (passWord1 == null || passWord2 == null || 
 					passWord1.trim().length()==0 && passWord2.trim().length()==0) {
-				writer.println("error: password is invalid");
-			} else if (passWord1.equals(passWord2)) {
-					t.setUserName(userName);
-					t.setPassWord(passWord1);
-					t.setFirstName(fname);
-					t.setLastName(lname);
-					t.setDateOfBirth(dob);
-					t.setAddress(address);
-					t.setSubjects(subjects);
-					t.setPrice(price);
-					td.insertTutor(t);
+				writer.println("invalid password");
+			} else {
+				try {
+					Connection conn = MyDatabaseConnection.getConn();
+				    PreparedStatement ps = conn.prepareStatement("select * from tutor where username=?");
+					ps.setString(1, userName);
+					ResultSet rs = ps.executeQuery();
+					
+					if(rs.next()) {
+						writer.println("username existed");
+					} else if (passWord1.equals(passWord2)) {
+						t.setUserName(userName);
+						t.setPassWord(passWord1);
+						t.setFirstName(fname);
+						t.setLastName(lname);
+						t.setDateOfBirth(dob);
+						t.setAddress(address);
+						t.setSubjects(subjects);
+						t.setPrice(price);
+						td.insertTutor(t);
 					writer.println("Welcome, please login");
 					response.sendRedirect("login.jsp");
-			} else{
-				writer.println("password does not match");
-			}
+					} else {
+						writer.println("password does not match");
+				    }
+			    } catch(Exception e){
+					System.out.println(e);
+				
+			    }
+	      }
 		}
 		else {
 			
@@ -103,10 +117,9 @@ public class RegisterServlet extends HttpServlet {
 				writer.println("invalid password");
 			} else {
 				try {
-				    Connection conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/", "postgres", "jie");
-				    PreparedStatement ps = conn.prepareStatement("select * from student where username=? and password=?");
+					Connection conn = MyDatabaseConnection.getConn();
+				    PreparedStatement ps = conn.prepareStatement("select * from student where username=?");
 					ps.setString(1, userName);
-					ps.setString(2, passWord1);
 					ResultSet rs = ps.executeQuery();
 					
 					if(rs.next()) {

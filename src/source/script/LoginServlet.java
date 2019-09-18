@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import source.DataMappers.MyDatabaseConnection;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -51,8 +52,8 @@ public class LoginServlet extends HttpServlet {
 		if (userName.equals("admin") && passWord.equals("admin") && type.equals("admin")) {
 			response.sendRedirect("dashboard.jsp");
 		} else {
-			try {
-			    Connection conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/", "postgres", "jie");
+			try {			
+				Connection conn = MyDatabaseConnection.getConn();
 			    PreparedStatement ps = conn.prepareStatement("select * from "+type+" where username=? and password=?");
 				ps.setString(1, userName);
 				ps.setString(2, passWord);
