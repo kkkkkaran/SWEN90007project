@@ -1,4 +1,4 @@
-package source.dataSource;
+package source.DataMappers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import source.domain.Tutor;
+import source.services.MyTutorDatabase;
+import source.services.TutorDatabase;
 
-
-public class MyTutorSubjectDatabase implements TutorSubjectDatabase{
+public class TutorCourseMapper {
 	static Connection conn;
 	static PreparedStatement ps;
 	
-	@Override
+	
 	public int insertSubject(int tutorId,int subjectId) {
 			
 			int status = 0;
@@ -33,7 +34,7 @@ public class MyTutorSubjectDatabase implements TutorSubjectDatabase{
 			return status;
 	}
 	
-	@Override
+	
 	public int deleteSubjectBySubjectId(int subjectId) {
 		int status = 0;
 		
@@ -52,7 +53,7 @@ public class MyTutorSubjectDatabase implements TutorSubjectDatabase{
 		
 	}
 	
-	@Override
+	
 	public int deleteSubject(int tutorId,int subjectId) {
 		int status = 0;
 		
@@ -72,7 +73,7 @@ public class MyTutorSubjectDatabase implements TutorSubjectDatabase{
 		
 	}
 	
-	@Override
+	
 	public List<Tutor> getTutorForCourse(int courseId) {
 		List<Tutor> tutors = new ArrayList<>();
 		try {
@@ -96,4 +97,6 @@ public class MyTutorSubjectDatabase implements TutorSubjectDatabase{
 		return tutors;
 	}
 
+
+	
 }

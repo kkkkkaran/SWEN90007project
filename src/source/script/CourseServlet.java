@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import source.dataSource.CourseGateway;
-import source.dataSource.MyTutorSubjectDatabase;
-import source.dataSource.TutorSubjectDatabase;
 import source.domain.Course;
 import source.domain.Tutor;
+import source.services.CourseGateway;
+import source.services.MyTutorSubjectDatabase;
+import source.services.TutorSubjectDatabase;
 
 /**
  * Servlet implementation class RegisterServlet

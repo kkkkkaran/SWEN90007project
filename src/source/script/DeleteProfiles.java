@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import source.dataSource.MyStudentDatabase;
-import source.dataSource.MyTutorDatabase;
-import source.dataSource.StudentDatabase;
-import source.dataSource.TutorDatabase;
 import source.domain.Student;
 import source.domain.Tutor;
+import source.services.MyStudentDatabase;
+import source.services.MyTutorDatabase;
+import source.services.StudentDatabase;
+import source.services.TutorDatabase;
 
 /**
  * Servlet implementation class DeleteProfiles

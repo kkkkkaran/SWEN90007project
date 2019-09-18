@@ -1,5 +1,5 @@
 package source.domain;
-public class Member {
+public class Member extends DomainObject{
 	private String userName;
 	private String passWord;
 	private String firstName;
@@ -30,6 +30,7 @@ public class Member {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	@Override
 	public int getId() {
 		return id;
 	}

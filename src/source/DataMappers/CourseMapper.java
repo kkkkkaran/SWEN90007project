@@ -1,4 +1,5 @@
-package source.dataSource;
+package source.DataMappers;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import source.dataSource.MyDatabaseConnection;
-import source.domain.Course;
 
-public class CourseGateway {
-	
+import source.domain.Course;
+import source.services.CourseGateway;
+
+public class CourseMapper {
 	static Connection conn;
 	static PreparedStatement ps;
 	public int insert(String name) throws SQLException {
@@ -80,7 +81,5 @@ public class CourseGateway {
 		return courseListString;
 		
 	}
-	
-	
 
 }

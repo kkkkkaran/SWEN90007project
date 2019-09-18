@@ -85,12 +85,7 @@ public boolean checkIfInList(DomainObject obj) {
 	 return false;
 }
 
-/**
- * execute the update
- * @param sessionId
- * @return
- */
-public boolean commit(String sessionId) {
+ boolean commit(String sessionId) {
 	boolean addResult = true;
 	boolean updateResult = true;
 	boolean deleteResult = true;

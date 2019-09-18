@@ -2,11 +2,12 @@
 package source.script;
 import java.io.IOException;
 
-import source.dataSource.MyStudentDatabase;
-import source.dataSource.MyTutorDatabase;
-import source.dataSource.StudentDatabase;
-import source.dataSource.TutorDatabase;
 import source.domain.*;
+import source.services.MyStudentDatabase;
+import source.services.MyTutorDatabase;
+import source.services.StudentDatabase;
+import source.services.TutorDatabase;
+
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package source.dataSource;
+package source.DataMappers;
 public interface DatabaseConnection {
 
 	String connUrl = "jdbc:postgresql://127.0.0.1:5432/";

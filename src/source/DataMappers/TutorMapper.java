@@ -1,24 +1,20 @@
-package source.dataSource;
+package source.DataMappers;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import source.domain.Tutor;
 
 
-
-
-public class MyTutorDatabase implements TutorDatabase {
-	
-	static HashMap<Integer, Tutor> tutorIdentityMap = new HashMap<Integer, Tutor>();
+public class TutorMapper {
 	static Connection conn;
 	static PreparedStatement ps;
 	
-	@Override
+
 	public int insertTutor(Tutor t) {
 		
 		
@@ -50,19 +46,16 @@ public class MyTutorDatabase implements TutorDatabase {
 	}
 	
 	
-	@Override
-	public int updateTutor(Tutor t) {
-		
-		int status = 0;
+	
+	public Tutor updateTutor(Tutor t) {
 		
 		String[] subjects = t.getSubjects();
-		TutorSubjectDatabase tsd = new MyTutorSubjectDatabase();
+		TutorCourseMapper tc = new TutorCourseMapper();
 		for(int i=0;i<subjects.length;i++) {
 			String[] splitted = subjects[i].split(":"); //format is id:subjectName
-			tsd.insertSubject(t.getId(), Integer.parseInt(splitted[0]));
+			tc.insertSubject(t.getId(), Integer.parseInt(splitted[0]));
 			
 		}
-		
 		try {
 			conn=MyDatabaseConnection.getConn();
 			ps=conn.prepareStatement("update tutor(id,username,password,first name,lastname,yearofbirth,education,location,rateperhour,approved) values(?,?,?,?,?,?,?,?,?,?) WHERE id="+t.getId());
@@ -77,19 +70,19 @@ public class MyTutorDatabase implements TutorDatabase {
 			ps.setString(9, t.getPrice());
 			ps.setBoolean(10, t.getApproved());
 
-			status=ps.executeUpdate();
+			ps.executeUpdate();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
 			
 		}
-		tutorIdentityMap.replace(t.getId(), t);
-		return status;
+		
+		return t;
 	}
 	
 
-	@Override
+
 	public Tutor getTutor(String username, String password) {
 		
 
@@ -126,12 +119,12 @@ public class MyTutorDatabase implements TutorDatabase {
 			System.out.println(e);
 			
 		}
-		tutorIdentityMap.put(t.getId(), t);
+		
 		return t;
 	}
 	
 	
-	@Override
+	
 	public Tutor lazyLoadedTutor(Tutor t) {	
 		try {
 			
@@ -158,24 +151,13 @@ public class MyTutorDatabase implements TutorDatabase {
 			System.out.println(e);
 			
 		}
-		tutorIdentityMap.replace(t.getId(), t); //Updated object inserted in identity map
+		
 		return t;
 		
 		
 	}
 	public Tutor getTutorAtId(int id) {
 			
-			//identity map implementation
-			if(tutorIdentityMap.containsKey(id)) {
-				Tutor t=tutorIdentityMap.get(id);
-				if(t.getFirstName() != null) { //if contains full profile, and not partial due to lazy loading
-					return t;
-				}
-				else { //fetching rest of tutor profile, implementing lazy load
-					TutorDatabase td = new MyTutorDatabase();
-					return td.lazyLoadedTutor(t);
-				}
-			}
 			Tutor t = new Tutor();
 			
 			try {
@@ -205,7 +187,7 @@ public class MyTutorDatabase implements TutorDatabase {
 				System.out.println(e);
 				
 			}
-			tutorIdentityMap.put(id, t);
+			
 			return t;
 		}
 	
@@ -281,12 +263,7 @@ public class MyTutorDatabase implements TutorDatabase {
 			ps=conn.prepareStatement("delete from tutor WHERE id="+t.getId());
 			status=ps.executeUpdate();
 			conn.close();
-			int id=t.getId();
 			
-			//delete from identity map
-			if(tutorIdentityMap.containsKey(t.getId())) {
-				tutorIdentityMap.remove(id);
-			}
 			
 		}catch(Exception e){
 			System.out.println(e);
@@ -295,7 +272,5 @@ public class MyTutorDatabase implements TutorDatabase {
 		return status;
 		
 	}
-		
-		
 
 }

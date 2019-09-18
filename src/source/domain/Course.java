@@ -1,5 +1,5 @@
 package source.domain;
-public class Course {
+public class Course extends DomainObject{
 	private int courseId;
 	private String courseName;
 

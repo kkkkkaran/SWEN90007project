@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="source.dataSource.CourseGateway" %> 
+<%@ page import="source.services.CourseGateway" %> 
 <%@ page import="source.domain.Course" %>    
 <!DOCTYPE html>
 <html>

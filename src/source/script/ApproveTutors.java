@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import source.dataSource.MyTutorDatabase;
-import source.dataSource.TutorDatabase;
 import source.domain.Tutor;
+import source.services.MyTutorDatabase;
+import source.services.TutorDatabase;
 
 /**
  * Servlet implementation class ApproveTutors
