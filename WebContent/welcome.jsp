@@ -8,8 +8,8 @@
 </head>
 <body>
     <h3>Welcome to Tutor Booking System</h3>
-    <a href="ViewProfile">View Profile</a>
-    <a href="CourseServlet">View Courses</a>
+    <a href="<%=request.getContextPath()%>/ViewProfileServlet">View Profile</a>
+    <a href="<%=request.getContextPath()%>/CourseServlet">View Courses</a>
     <a href="logout.jsp">Logout</a>
 </body>
 </html>

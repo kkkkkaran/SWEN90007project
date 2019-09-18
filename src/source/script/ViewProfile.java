@@ -59,7 +59,7 @@ public class ViewProfile extends HttpServlet {
 		out.println("<body>");
 		out.println("<form action=\"ViewProfile\" method=\"post\">");
 		out.println("<table>");
-		out.println("input type=\"hidden\" name=\"type\" value=\""+userType+"\"");
+		out.println("<input type=\"hidden\" name=\"type\" value=\""+userType+"\">");
 		out.println("<tr><td>First Name :</td><td><input type=\"text\" name=\"fname\" value=\""+ s.getFirstName()+"\"></td></tr>");
 		out.println("<tr><td>Last Name :</td><td><input type=\"text\" name=\"lname\" value=\""+ s.getLastName()+"\"></td></tr>");
 		out.println("<tr><td>Year of Birth (YYYY):</td><td><input type=\"text\" name=\"dob\" value=\""+ s.getFirstName()+"\"></td></tr>");

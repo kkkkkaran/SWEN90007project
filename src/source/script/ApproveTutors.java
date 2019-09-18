@@ -36,7 +36,7 @@ public class ApproveTutors extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 		PrintWriter out = response.getWriter();
 		TutorInterface ti = new TutorService();
 		List<Tutor> tutorList;
@@ -54,11 +54,11 @@ public class ApproveTutors extends HttpServlet {
 			out.println("<table>");
 			while(iterator.hasNext()) {
 				Tutor t=tutorList.get(i);
-				out.println("<tr><ti>"+t.getFirstName()+"</ti>"+" "+"<ti>"+t.getAddress());
-				out.println("</ti><ti><input type=\"checkbox\" name=\"approve\" value=\""+t.getId()+"\"</ti> </tr> ");
+				out.println("<tr><td>"+t.getFirstName()+"</td>"+" "+"<td>"+t.getAddress());
+				out.println("</td><td><input type=\"checkbox\" name=\"approve\" value=\""+t.getId()+"\"</td> </tr> ");
 				i++;		
 			}
-		 	out.println("<tr><ti><input type=\"submit\" value=\"Go\"></ti></tr>");
+		 	out.println("<tr><td><input type=\"submit\" value=\"Go\"></td></tr>");
 	        out.println("</table>");
 	        out.println("</form>");
 	        out.println("</body></html>");

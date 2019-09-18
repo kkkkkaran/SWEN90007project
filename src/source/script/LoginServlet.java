@@ -56,10 +56,11 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("dashboard.jsp");
 		} 
 		else {
+			
 			if(type.equals("tutor")) {
 				Tutor t=ts.getTutor(userName, passWord);
 				if(t.getUserName().equals(null)) {
-					writer.println("username or password does not exit");
+					writer.println("username or password does not exist");
 				}
 				else {
 					response.sendRedirect("welcome.jsp");
