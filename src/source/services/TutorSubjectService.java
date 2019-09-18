@@ -6,7 +6,7 @@ import source.DataMappers.TutorCourseMapper;
 import source.domain.Tutor;
 
 
-public class MyTutorSubjectDatabase implements TutorSubjectDatabase{
+public class TutorSubjectService implements TutorSubjectInterface{
 	
 	
 	@Override

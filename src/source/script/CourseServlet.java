@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import source.domain.Course;
 import source.domain.Tutor;
-import source.services.CourseGateway;
-import source.services.MyTutorSubjectDatabase;
-import source.services.TutorSubjectDatabase;
+import source.services.CourseService;
+import source.services.TutorSubjectService;
+import source.services.TutorSubjectInterface;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -37,11 +37,11 @@ public class CourseServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		CourseGateway cg=new CourseGateway();
+		CourseService cs=new CourseService();
 		
 		List<Course> courses;
 		try {
-			courses = cg.listCourses();
+			courses = cs.listCourses();
 
 			PrintWriter out = response.getWriter();
 			
@@ -78,9 +78,9 @@ public class CourseServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		TutorSubjectDatabase tsd = new MyTutorSubjectDatabase();
+		TutorSubjectInterface tss = new TutorSubjectService();
 		int courseId = Integer.parseInt(request.getParameter("subjectSelection"));
-		List<Tutor> tutorList = tsd.getTutorForCourse(courseId);
+		List<Tutor> tutorList = tss.getTutorForCourse(courseId);
 		Iterator<Tutor> iterator = tutorList.iterator();
 		int i=0;
 		out.println("<!DOCTYPE html>");

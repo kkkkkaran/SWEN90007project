@@ -6,7 +6,7 @@ import java.util.List;
 import source.domain.Student;
 import source.DataMappers.StudentMapper;
 
-public class MyStudentDatabase implements StudentDatabase {
+public class StudentService implements StudentInterface {
 
 	static HashMap<Integer, Student> studentIdentityMap = new HashMap<Integer, Student>();
 	
@@ -70,7 +70,7 @@ public class MyStudentDatabase implements StudentDatabase {
 				return s;
 			}
 			else { //fetching rest of student profile, implementing lazy load
-				StudentDatabase sd = new MyStudentDatabase();
+				StudentInterface sd = new StudentService();
 				return sd.lazyLoadedStudent(s);
 			}
 		}

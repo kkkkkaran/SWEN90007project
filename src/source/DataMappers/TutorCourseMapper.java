@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import source.domain.Tutor;
-import source.services.MyTutorDatabase;
-import source.services.TutorDatabase;
+import source.services.TutorService;
+import source.services.TutorInterface;
 
 public class TutorCourseMapper {
 	static Connection conn;
@@ -83,7 +83,7 @@ public class TutorCourseMapper {
 			ps.setInt(1, courseId);
 			ResultSet rs = ps.executeQuery();
 			
-			TutorDatabase mt = new MyTutorDatabase();
+			TutorInterface mt = new TutorService();
 			while(rs.next()) {
 				Tutor t = mt.getTutorAtId(rs.getInt(1));
 				tutors.add(t);

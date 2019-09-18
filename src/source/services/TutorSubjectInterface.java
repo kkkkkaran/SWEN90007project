@@ -4,7 +4,7 @@ import java.util.List;
 
 import source.domain.Tutor;
 
-public interface TutorSubjectDatabase {
+public interface TutorSubjectInterface {
 	public int insertSubject(int tutorId,int subjectId);
 	public int deleteSubjectBySubjectId(int subjectId);
 	public int deleteSubject(int tutorId,int subjectId);

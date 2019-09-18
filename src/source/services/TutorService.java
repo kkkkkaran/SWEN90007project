@@ -7,7 +7,7 @@ import source.DataMappers.TutorMapper;
 
 
 
-public class MyTutorDatabase implements TutorDatabase {
+public class TutorService implements TutorInterface {
 	
 	static HashMap<Integer, Tutor> tutorIdentityMap = new HashMap<Integer, Tutor>();
 	
@@ -22,7 +22,7 @@ public class MyTutorDatabase implements TutorDatabase {
 	public int updateTutor(Tutor t) {
 		TutorMapper tm = new TutorMapper();
 		String[] subjects = t.getSubjects();
-		TutorSubjectDatabase tsd = new MyTutorSubjectDatabase();
+		TutorSubjectInterface tsd = new TutorSubjectService();
 		for(int i=0;i<subjects.length;i++) {
 			String[] splitted = subjects[i].split(":"); //format is id:subjectName
 			tsd.insertSubject(t.getId(), Integer.parseInt(splitted[0]));
@@ -60,7 +60,7 @@ public class MyTutorDatabase implements TutorDatabase {
 				return t;
 			}
 			else { //fetching rest of tutor profile, implementing lazy load
-				TutorDatabase td = new MyTutorDatabase();
+				TutorInterface td = new TutorService();
 				return td.lazyLoadedTutor(t);
 			}
 		}

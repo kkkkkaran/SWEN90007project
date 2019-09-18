@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import source.domain.Course;
-import source.services.CourseGateway;
+import source.services.CourseService;
 
 public class CourseMapper {
 	static Connection conn;
@@ -68,7 +68,7 @@ public class CourseMapper {
 	}
 	
 	public static String listCoursesText() throws SQLException {
-		CourseGateway cg=new CourseGateway();
+		CourseService cg=new CourseService();
 		List<Course> courses=cg.listCourses();
 		Iterator<Course> iterator = courses.iterator();
 		int i=0;

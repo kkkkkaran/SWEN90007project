@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import source.domain.Student;
 import source.domain.Tutor;
-import source.services.MyStudentDatabase;
-import source.services.MyTutorDatabase;
-import source.services.StudentDatabase;
-import source.services.TutorDatabase;
+import source.services.StudentService;
+import source.services.TutorService;
+import source.services.StudentInterface;
+import source.services.TutorInterface;
 
 /**
  * Servlet implementation class DeleteProfiles
@@ -41,13 +41,13 @@ public class DeleteProfiles extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		PrintWriter out = response.getWriter();
-		StudentDatabase sd = new MyStudentDatabase();
-		TutorDatabase td = new MyTutorDatabase();
+		StudentInterface ss = new StudentService();
+		TutorInterface td = new TutorService();
 		List<Tutor> tutorList;
 		List<Student> studentList;
 		try {
 			tutorList = td.listAllTutors();
-			studentList = sd.listAllStudents();
+			studentList = ss.listAllStudents();
 			
 			Iterator<Tutor> iterator = tutorList.iterator();
 			Iterator<Student> iteratorS = studentList.iterator();
@@ -72,8 +72,7 @@ public class DeleteProfiles extends HttpServlet {
 			
 			out.println("Students");
 			out.println("<table>");
-			
-			while(iterator.hasNext()) {
+			while(iteratorS.hasNext()) {
 				Student s=studentList.get(i);
 				out.println("<tr><td>"+s.getFirstName()+"</td>"+" "+"<td>"+s.getAddress());
 				out.println("</td><td><input type=\"checkbox\" name=\"deleteStudent\" value=\""+s.getId()+"\"</td> </tr> ");
@@ -99,8 +98,8 @@ public class DeleteProfiles extends HttpServlet {
 		doGet(request, response);
 		doGet(request, response);
 		doGet(request, response);
-		TutorDatabase td=new MyTutorDatabase();
-		StudentDatabase sd=new MyStudentDatabase();
+		TutorInterface td=new TutorService();
+		StudentInterface ss=new StudentService();
 		String[] tutorsToDelete = request.getParameterValues("deleteTutor");
 		String[] studentsToDelete = request.getParameterValues("deleteStudent");
 		PrintWriter out = response.getWriter();
@@ -124,8 +123,8 @@ public class DeleteProfiles extends HttpServlet {
 		
 		for(String value : studentsToDelete) {
 			
-			Student s = sd.getStudentAtId(Integer.parseInt(value));
-			sd.deleteStudent(s);
+			Student s = ss.getStudentAtId(Integer.parseInt(value));
+			ss.deleteStudent(s);
 			out.println(s.getFirstName()+" deleted");	
 			 
 		}

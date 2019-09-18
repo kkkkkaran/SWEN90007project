@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="source.services.CourseGateway" %> 
+<%@ page import="source.services.CourseService" %> 
 <%@ page import="source.domain.Course" %>    
 <!DOCTYPE html>
 <html>
@@ -82,6 +82,8 @@
             
             <tr> */
             %>
+            
+            <tr>
                 <td>Rate per hour :</td>
                 <td><input type="text" name="price" id="price" disabled></td>
             </tr>

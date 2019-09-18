@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import source.domain.Course;
-import source.services.CourseGateway;
+import source.services.CourseService;
 
 /**
  * Servlet implementation class CourseMaintain
@@ -34,11 +34,11 @@ public class CourseMaintain extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		CourseGateway cg=new CourseGateway();
+		CourseService cs=new CourseService();
 		
 		List<Course> courses;
 		try {
-			courses = cg.listCourses();
+			courses = cs.listCourses();
 
 			PrintWriter out = response.getWriter();
 			
@@ -82,7 +82,7 @@ public class CourseMaintain extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		CourseGateway cg=new CourseGateway();
+		CourseService cs=new CourseService();
 		String[] coursesToDelete = request.getParameterValues("subjectSelection");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
@@ -95,7 +95,7 @@ public class CourseMaintain extends HttpServlet {
 			
 			for(int i=0;i<coursesToDelete.length;i++) {
 				try {
-					cg.delete(coursesToDelete[i]);
+					cs.delete(coursesToDelete[i]);
 					out.println(coursesToDelete[i]+" deleted");
 					
 				} catch (SQLException e) {

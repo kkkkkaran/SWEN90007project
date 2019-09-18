@@ -3,10 +3,10 @@ package source.script;
 import java.io.IOException;
 
 import source.domain.*;
-import source.services.MyStudentDatabase;
-import source.services.MyTutorDatabase;
-import source.services.StudentDatabase;
-import source.services.TutorDatabase;
+import source.services.StudentService;
+import source.services.TutorService;
+import source.services.StudentInterface;
+import source.services.TutorInterface;
 
 import java.io.PrintWriter;
 
@@ -40,8 +40,8 @@ public class ViewProfile extends HttpServlet {
 		String password="admin";
 		Member s;
 		Tutor t;
-		MyStudentDatabase ms=new MyStudentDatabase();
-		MyTutorDatabase mt=new MyTutorDatabase();
+		StudentService ms=new StudentService();
+		TutorService mt=new TutorService();
 		
 		if (userType == 0){
 			s = ms.getStudent(username,password);
@@ -89,8 +89,8 @@ public class ViewProfile extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		doGet(request, response);
 		
-		StudentDatabase sd = new MyStudentDatabase();
-		TutorDatabase td = new MyTutorDatabase();
+		StudentInterface sd = new StudentService();
+		TutorInterface td = new TutorService();
 		
 		String userName = request.getParameter("userName");
 		String passWord1 = request.getParameter("passWord1");

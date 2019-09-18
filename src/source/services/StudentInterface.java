@@ -5,7 +5,7 @@ import java.util.List;
 
 import source.domain.Student;
 
-public interface StudentDatabase {
+public interface StudentInterface {
 
 	public int insertStudent(Student s);
 	public int updateStudent(Student s);

@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import source.domain.Student;
 import source.domain.Tutor;
-import source.services.MyStudentDatabase;
-import source.services.MyTutorDatabase;
-import source.services.StudentDatabase;
-import source.services.TutorDatabase;
+import source.services.StudentService;
+import source.services.TutorService;
+import source.services.StudentInterface;
+import source.services.TutorInterface;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -51,8 +51,8 @@ public class RegisterServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		doGet(request, response);
 		
-		StudentDatabase sd = new MyStudentDatabase();
-		TutorDatabase td = new MyTutorDatabase();
+		StudentInterface sd = new StudentService();
+		TutorInterface td = new TutorService();
 		
 		String userName = request.getParameter("userName");
 		String passWord1 = request.getParameter("passWord1");

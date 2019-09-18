@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import source.domain.Tutor;
-import source.services.MyTutorDatabase;
-import source.services.TutorDatabase;
+import source.services.TutorService;
+import source.services.TutorInterface;
 
 /**
  * Servlet implementation class ApproveTutors
@@ -38,10 +38,10 @@ public class ApproveTutors extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		PrintWriter out = response.getWriter();
-		TutorDatabase td = new MyTutorDatabase();
+		TutorInterface ti = new TutorService();
 		List<Tutor> tutorList;
 		try {
-			tutorList = td.listUnapprovedTutors();
+			tutorList = ti.listUnapprovedTutors();
 			Iterator<Tutor> iterator = tutorList.iterator();
 			int i=0;
 			out.println("<!DOCTYPE html>");
@@ -54,11 +54,11 @@ public class ApproveTutors extends HttpServlet {
 			out.println("<table>");
 			while(iterator.hasNext()) {
 				Tutor t=tutorList.get(i);
-				out.println("<tr><td>"+t.getFirstName()+"</td>"+" "+"<td>"+t.getAddress());
-				out.println("</td><td><input type=\"checkbox\" name=\"approve\" value=\""+t.getId()+"\"</td> </tr> ");
+				out.println("<tr><ti>"+t.getFirstName()+"</ti>"+" "+"<ti>"+t.getAddress());
+				out.println("</ti><ti><input type=\"checkbox\" name=\"approve\" value=\""+t.getId()+"\"</ti> </tr> ");
 				i++;		
 			}
-		 	out.println("<tr><td><input type=\"submit\" value=\"Go\"></td></tr>");
+		 	out.println("<tr><ti><input type=\"submit\" value=\"Go\"></ti></tr>");
 	        out.println("</table>");
 	        out.println("</form>");
 	        out.println("</body></html>");
@@ -77,7 +77,7 @@ public class ApproveTutors extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		doGet(request, response);
-		TutorDatabase td=new MyTutorDatabase();
+		TutorInterface ti=new TutorService();
 		String[] tutorsToApprove = request.getParameterValues("approve");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
@@ -90,9 +90,9 @@ public class ApproveTutors extends HttpServlet {
 			
 			for(int i=0;i<tutorsToApprove.length;i++) {
 				
-				Tutor t = td.getTutorAtId(Integer.parseInt(tutorsToApprove[i]));
+				Tutor t = ti.getTutorAtId(Integer.parseInt(tutorsToApprove[i]));
 				t.setApproved(true);
-				td.updateTutor(t);
+				ti.updateTutor(t);
 				out.println(t.getFirstName()+" approved");	
 				 
 			}

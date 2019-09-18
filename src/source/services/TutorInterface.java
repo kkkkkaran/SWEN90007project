@@ -5,7 +5,7 @@ import java.util.List;
 
 import source.domain.Tutor;
 
-public interface TutorDatabase {
+public interface TutorInterface {
 	public int insertTutor(Tutor t);
 	public Tutor getTutor(String userName, String passWord);
 	public Tutor getTutorAtId(int id);

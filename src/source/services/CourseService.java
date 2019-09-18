@@ -5,7 +5,7 @@ import java.util.List;
 import source.DataMappers.CourseMapper;
 import source.domain.Course;
 
-public class CourseGateway {
+public class CourseService {
 	
 	public int insert(String name) throws SQLException {
 		CourseMapper cm = new CourseMapper();

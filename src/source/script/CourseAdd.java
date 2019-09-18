@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import source.services.CourseGateway;
+import source.services.CourseService;
 
 /**
  * Servlet implementation class CourseAdd
@@ -40,7 +40,7 @@ public class CourseAdd extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		CourseGateway cg=new CourseGateway();
+		CourseService cs=new CourseService();
 		String name = request.getParameter("subjectToAdd");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
@@ -50,7 +50,7 @@ public class CourseAdd extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		try {
-			cg.insert(name);
+			cs.insert(name);
 			
 			out.println("Inserted!");
 			
