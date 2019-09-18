@@ -60,20 +60,20 @@ public class ViewProfile extends HttpServlet {
 		out.println("<form action=\"ViewProfile\" method=\"post\">");
 		out.println("<table>");
 		out.println("<input type=\"hidden\" name=\"type\" value=\""+userType+"\">");
-		out.println("<tr><td>First Name :</td><td><input type=\"text\" name=\"fname\" value=\""+ s.getFirstName()+"\"></td></tr>");
-		out.println("<tr><td>Last Name :</td><td><input type=\"text\" name=\"lname\" value=\""+ s.getLastName()+"\"></td></tr>");
-		out.println("<tr><td>Year of Birth (YYYY):</td><td><input type=\"text\" name=\"dob\" value=\""+ s.getFirstName()+"\"></td></tr>");
-		out.println("<tr><td>Education :</td><td><input type=\"text\" name=\"education\" value=\""+ s.getDateOfBirth()+"\"></td></tr>");
-		out.println("<tr><td>Location :</td><td><input type=\"text\" name=\"address\" value=\""+ s.getAddress()+"\"></td></tr>");
+		out.println("<tr><td>First Name :</td><td><input type=\"text\" name=\"fname\" value=\""+ 111/*s.getFirstName()*/+"\"></td></tr>");
+		out.println("<tr><td>Last Name :</td><td><input type=\"text\" name=\"lname\" value=\""+ 111/*s.getLastName()*/+"\"></td></tr>");
+		out.println("<tr><td>Year of Birth (YYYY):</td><td><input type=\"text\" name=\"dob\" value=\""+ 111/*s.getFirstName()*/+"\"></td></tr>");
+		out.println("<tr><td>Education :</td><td><input type=\"text\" name=\"education\" value=\""+ 111/*s.getDateOfBirth()*/+"\"></td></tr>");
+		out.println("<tr><td>Location :</td><td><input type=\"text\" name=\"address\" value=\""+ 111/*s.getAddress()*/+"\"></td></tr>");
 		if(userType == 1) { //printing tutor specific fields
 			t = mt.getTutor(username,password);
 			String[] subjectList = t.getSubjects();
 			String subjects = String.join(",", subjectList);
-			out.println("<tr> <td>Subject List :</td> <td><input type=\"text\" name=\"subjects\" id=\"subjects\" value=\""+subjects+"\" disabled></td> </tr>");
-			out.println("<tr><td>Rate per hour :</td><td><input type=\"text\" name=\"price\" id=\"price\" value=\""+t.getPrice()+"\"></td></tr>");	
+			out.println("<tr> <td>Subject List :</td> <td><input type=\"text\" name=\"subjects\" id=\"subjects\" value=\""+222/*subjects*/+"\" disabled></td> </tr>");
+			out.println("<tr><td>Rate per hour :</td><td><input type=\"text\" name=\"price\" id=\"price\" value=\""+222/*t.getPrice()*/+"\"></td></tr>");	
 		}
-		out.println("<tr><td>UserName :</td> <td><input type=\"text\" name=\"userName\" value=\""+ s.getUserName()+"\" disabled></td> </tr>");
-		out.println(" <tr> <td>Password :</td><td><input type=\"password\" name=\"passWord1\" value=\""+ s.getPassWord()+"\"></td></tr>");
+		out.println("<tr><td>UserName :</td> <td><input type=\"text\" name=\"userName\" value=\""+ /*s.getUserName()*/333+"\" disabled></td> </tr>");
+		out.println(" <tr> <td>Password :</td><td><input type=\"password\" name=\"passWord1\" value=\""+ /*s.getPassWord()*/333+"\"></td></tr>");
         out.println("<tr><td><input type=\"submit\" value=\"Register\"></td><td><a href=\"homepage.jsp\">HomePage</a></td></tr>");
         out.println("</table>");
         out.println("</form>");
