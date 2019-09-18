@@ -57,7 +57,8 @@ public class CourseMaintain extends HttpServlet {
 	        out.println("</form>");
 	        
 			out.println("<form action=\"CourseMaintain\" method=\"post\">");
-			out.println("<table>");
+			/////////////////////////////////////
+			out.println("<table hidden=true>");
 			out.println("<tr><td>Delete Courses</td></tr>");
 			
 			for(int i=0;i<courses.size();i++) {
