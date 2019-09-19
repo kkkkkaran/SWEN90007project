@@ -59,8 +59,10 @@ public class ApproveTutors extends HttpServlet {
 			*/
 			for(int i=0;i<tutorList.size();i++) {
 				Tutor t=tutorList.get(i);
-				out.println("<tr><td>"+t.getFirstName()+"</td>"+" "+"<td>"+t.getAddress());
-				out.println("</td><td><input type=\"checkbox\" name=\"approve\" value=\""+t.getId()+"\"</td> </tr> ");		
+				if(!t.getFirstName().isEmpty()) {
+					out.println("<tr><td>"+t.getFirstName()+"</td>"+" "+"<td>"+t.getAddress());
+					out.println("</td><td><input type=\"checkbox\" name=\"approve\" value=\""+t.getId()+"\"</td> </tr> ");
+				}
 			}
 		 	out.println("<tr><td><input type=\"submit\" value=\"Go\"></td></tr>");
 	        out.println("</table>");
@@ -79,10 +81,8 @@ public class ApproveTutors extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		doGet(request, response);
 		TutorInterface ti=new TutorService();
-		String[] tutorsToApprove = request.getParameterValues("approve");
+		
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
@@ -90,15 +90,16 @@ public class ApproveTutors extends HttpServlet {
 		out.println("<title> Deleted Courses </title>");
 		out.println("</head>");
 		out.println("<body>");
-		if(tutorsToApprove.length > 0) {
-			
-			for(int i=0;i<tutorsToApprove.length;i++) {
-				
-				Tutor t = ti.getTutorAtId(Integer.parseInt(tutorsToApprove[i]));
-				t.setApproved(true);
-				ti.updateTutor(t);
-				out.println(t.getFirstName()+" approved");	
-				 
+		if (request.getParameterMap().containsKey("approve")) {
+			String[] tutorsToApprove = request.getParameterValues("approve");
+			if(tutorsToApprove.length > 0) {
+				for(int i=0;i<tutorsToApprove.length;i++) {
+					Tutor t = ti.getTutorAtId(Integer.parseInt(tutorsToApprove[i]));
+					t.setApproved(true);
+					ti.updateTutor(t);
+					out.println(t.getFirstName()+" approved");	
+					 
+				}
 			}
 		}
 		out.println("</body></html>");

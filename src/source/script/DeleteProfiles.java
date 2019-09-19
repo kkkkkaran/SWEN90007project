@@ -76,13 +76,13 @@ public class DeleteProfiles extends HttpServlet {
 			out.println("Students");
 			out.println("<table>");
 			
-			/* Test Data
+			 /*Test Data*/
 			Student s=new Student();
 			s.setFirstName("abcd");
 			s.setAddress("defg");
 			s.setId(1234);
 			studentList.add(s);
-			*/
+			
 			for(int j=0;j<studentList.size();j++) {
 				Student sss=studentList.get(j);
 				out.println("<tr><td>"+sss.getFirstName()+"</td>"+" "+"<td>"+sss.getAddress());
@@ -106,13 +106,10 @@ public class DeleteProfiles extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		doGet(request, response);
-		doGet(request, response);
+		
 		TutorInterface td=new TutorService();
 		StudentInterface ss=new StudentService();
-		String[] tutorsToDelete = request.getParameterValues("deleteTutor");
-		String[] studentsToDelete = request.getParameterValues("deleteStudent");
+		
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
@@ -121,24 +118,37 @@ public class DeleteProfiles extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		
-			
-		for(String value : tutorsToDelete) {
-			
-			Tutor t = td.getTutorAtId(Integer.parseInt(value));
-			td.deleteTutor(t);
-			out.println(t.getFirstName()+" deleted");	
-			 
-		}
+		if (request.getParameterMap().containsKey("deleteTutor")) {
+			String[] tutorsToDelete = request.getParameterValues("deleteTutor");
+			if(tutorsToDelete.length>0) {
+				for(int i=0;i<tutorsToDelete.length;i++) {
+					out.println("value");
+					Tutor t = td.getTutorAtId(Integer.parseInt(tutorsToDelete[i]));
+					td.deleteTutor(t);
+					out.println(t.getFirstName()+" deleted");	
+					 
+				}
+			}
+        }
+		if (request.getParameterMap().containsKey("deleteStudent")) {
+			String[] studentsToDelete=request.getParameterValues("deleteStudent");
+			 if(studentsToDelete.length>0) {
+					for(int i=0;i<studentsToDelete.length;i++) {
+						Student s = ss.getStudentAtId(Integer.parseInt(studentsToDelete[i]));
+						ss.deleteStudent(s);
+						out.println(s.getFirstName()+" deleted");	
+						 
+					}
+				}
+        }
 		
 		
 		
-		for(String value : studentsToDelete) {
-			
-			Student s = ss.getStudentAtId(Integer.parseInt(value));
-			ss.deleteStudent(s);
-			out.println(s.getFirstName()+" deleted");	
-			 
-		}
+		
+		
+		
+		
+		
 		
 		out.println("</body></html>");
 	}
