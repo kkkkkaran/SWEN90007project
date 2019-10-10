@@ -26,11 +26,11 @@ public class StudentService implements StudentInterface {
 	}
 	
 
-	@Override
-	public Student getStudent(String username, String password) {
+
+	public Student getStudent(String username) {
 		Student s = new Student();
 		StudentMapper sm=new StudentMapper();
-		s = sm.getStudent(username, password);
+		s = sm.getStudent(username);
 		studentIdentityMap.put(s.getId(), s);
 		return s;
 	}

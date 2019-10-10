@@ -3,6 +3,7 @@ package source.services;
 
 import java.util.List;
 import source.DataMappers.TutorCourseMapper;
+import source.domain.Course;
 import source.domain.Tutor;
 
 
@@ -32,6 +33,16 @@ public class TutorSubjectService implements TutorSubjectInterface{
 	public List<Tutor> getTutorForCourse(int courseId) {
 		TutorCourseMapper tcm=new TutorCourseMapper();
 		return tcm.getTutorForCourse(courseId);
+	}
+	@Override
+	public List<Course> getCoursesNotRegistered(Tutor t){
+		TutorCourseMapper tcm=new TutorCourseMapper();
+		return tcm.getCoursesNotRegistered(t);
+	}
+	@Override
+	public List<Course> getCoursesRegistered(Tutor t){
+		TutorCourseMapper tcm=new TutorCourseMapper();
+		return tcm.getCoursesRegistered(t);
 	}
 
 }

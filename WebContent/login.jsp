@@ -1,5 +1,7 @@
+<%@ page import="source.utils.AppSession" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +9,9 @@
 <title>Login</title>
 </head>
 <body>
+	<% if (!AppSession.isAuthenticated())	{ %>
     <form action="LoginServlet" method="post">
+    	
         <table>
             <tr>
                 <td>UserName :</td>
@@ -33,6 +37,12 @@
                 <td><a href="homepage.jsp">HomePage</a></td>
             </tr>
         </table>
-    </form>
+        </form>
+        <% } else {  %>
+        You are already logged in
+        <a href="welcome.jsp">HomePage</a>
+        <% } %>
+        
+    
 </body> 
 </html>

@@ -87,17 +87,17 @@ public class ApproveTutors extends HttpServlet {
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<head>");
-		out.println("<title> Deleted Courses </title>");
+		out.println("<title> Approved </title>");
 		out.println("</head>");
 		out.println("<body>");
 		if (request.getParameterMap().containsKey("approve")) {
 			String[] tutorsToApprove = request.getParameterValues("approve");
 			if(tutorsToApprove.length > 0) {
 				for(int i=0;i<tutorsToApprove.length;i++) {
-					Tutor t = ti.getTutorAtId(Integer.parseInt(tutorsToApprove[i]));
-					t.setApproved(true);
-					ti.updateTutor(t);
-					out.println(t.getFirstName()+" approved");	
+					int a = Integer.parseInt(tutorsToApprove[i]);
+					System.out.println(a);
+					ti.approveTutor(a);
+					out.println("approved");	
 					 
 				}
 			}

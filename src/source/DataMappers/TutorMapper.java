@@ -32,7 +32,7 @@ public class TutorMapper {
 			ps.setString(6, t.getEducation());
 			ps.setString(7, t.getAddress());
 			ps.setString(8, t.getPrice());
-			ps.setBoolean(9, t.getApproved());
+			ps.setBoolean(9, false);
 			
 
 			status=ps.executeUpdate();
@@ -83,16 +83,16 @@ public class TutorMapper {
 	
 
 
-	public Tutor getTutor(String username, String password) {
+	public Tutor getTutor(String username) {
 		
 
 		Tutor t = new Tutor();
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select * from tutor where username=? and password=?");
+			ps=conn.prepareStatement("select * from tutor where username=?");
 			ps.setString(1, username);
-			ps.setString(2, password);
+			
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -129,19 +129,19 @@ public class TutorMapper {
 		try {
 			
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select (firstname,lastname,yearofbirth,education,location,rateperhour,approved) from tutor where idtutor=?;");
+			ps=conn.prepareStatement("select firstname,lastname,yearofbirth,education,location,rateperhour,approved from tutor where idtutor=?;");
 			ps.setInt(1, t.getId());
 			
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				t.setFirstName(rs.getString(4));
-				t.setLastName(rs.getString(5));
-				t.setDateOfBirth(rs.getString(6));
-				t.setEducation(rs.getString(7));
-				t.setAddress(rs.getString(8));
-				t.setPrice(rs.getString(9));
-				t.setApproved(rs.getBoolean(11));
+				t.setFirstName(rs.getString(1));
+				t.setLastName(rs.getString(2));
+				t.setDateOfBirth(rs.getString(3));
+				t.setEducation(rs.getString(4));
+				t.setAddress(rs.getString(5));
+				t.setPrice(rs.getString(6));
+				t.setApproved(rs.getBoolean(7));
 				
 				
 				
@@ -155,6 +155,19 @@ public class TutorMapper {
 		return t;
 		
 		
+	}
+	public int approveTutor(int id) {
+		int status=0;
+		try {
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("update tutor set approved=TRUE where idtutor=?");
+			ps.setInt(1, id);
+			status = ps.executeUpdate();
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		return status;
 	}
 	public Tutor getTutorAtId(int id) {
 			
@@ -173,11 +186,12 @@ public class TutorMapper {
 					t.setPassWord(rs.getString(3));
 					t.setFirstName(rs.getString(4));
 					t.setLastName(rs.getString(5));
-					t.setDateOfBirth(rs.getString(6));
-					t.setEducation(rs.getString(7));
+					t.setEducation(rs.getString(6));
+					t.setDateOfBirth(rs.getString(7));
 					t.setAddress(rs.getString(8));
-					t.setPrice(rs.getString(9));
-					t.setApproved(rs.getBoolean(11));
+					t.setApproved(rs.getBoolean(9));
+					t.setPrice(rs.getString(10));
+					
 					
 					
 					
@@ -208,7 +222,7 @@ public class TutorMapper {
 				t.setDateOfBirth(rs.getString(6));
 				t.setEducation(rs.getString(7));
 				t.setAddress(rs.getString(8));
-				t.setPrice(rs.getString(9));
+				t.setPrice(rs.getString(10));
 				t.setApproved(false);
 				tutors.add(t);
 				
@@ -272,5 +286,6 @@ public class TutorMapper {
 		return status;
 		
 	}
+	
 
 }

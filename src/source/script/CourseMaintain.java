@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import source.domain.Course;
 import source.services.CourseService;
+import source.utils.AppSession;
 
 /**
  * Servlet implementation class CourseMaintain
@@ -41,14 +42,14 @@ public class CourseMaintain extends HttpServlet {
 			courses = cs.listCourses();
 
 			PrintWriter out = response.getWriter();
-			
+			 
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
 			out.println("<head>");
 			out.println("<title> Maintain Courses </title>");
 			out.println("</head>");
 			out.println("<body>");
-			
+			if (AppSession.isAuthenticated() && AppSession.hasRole(AppSession.ADMIN_ROLE))	{
 			out.println("<form action=\"CourseAdd\" method=\"post\">");
 			out.println("<table>");
 			out.println("<tr><td>Add Course:</td><td><input type=\"text\" name=\"subjectToAdd\"></td></tr>");
@@ -70,6 +71,10 @@ public class CourseMaintain extends HttpServlet {
 	        out.println("<tr><td><input type=\"submit\" value=\"Go\"></td></tr>");
 	        out.println("</table>");
 	        out.println("</form>");
+			}
+			else {
+				out.println("You are not authenticated");
+			}
 	        out.println("</body></html>");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

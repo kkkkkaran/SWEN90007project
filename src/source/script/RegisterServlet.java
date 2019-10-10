@@ -64,6 +64,7 @@ public class RegisterServlet extends HttpServlet {
 		String address = request.getParameter("address");
 		String type = request.getParameter("type");
 		
+		
 		if(type.equals("tutor")) {
 			
 			//String[] subjects = request.getParameterValues("subjects");

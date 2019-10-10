@@ -48,9 +48,9 @@ public Student updateStudent(Student s) {
 		try {
 			conn=MyDatabaseConnection.getConn();
 			ps=conn.prepareStatement("update student values(?,?,?,?,?,?,?) WHERE idstudent="+s.getId());
-			ps.setInt(1, s.getId());
-			ps.setString(2, s.getUserName());
-			ps.setString(3, s.getPassWord());
+			ps.setInt(3, s.getId());
+			ps.setString(1, s.getUserName());
+			ps.setString(2, s.getPassWord());
 			ps.setString(4, s.getFirstName());
 			ps.setString(5, s.getLastName());
 			ps.setString(6, s.getDateOfBirth());
@@ -68,21 +68,20 @@ public Student updateStudent(Student s) {
 	}
 
 	
-	public Student getStudent(String username, String password) {
+	public Student getStudent(String username) {
 		Student s = new Student();
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select * from student where username=? and password=?");
+			ps=conn.prepareStatement("select * from student where username=?");
 			ps.setString(1, username);
-			ps.setString(2, password);
 			
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				s.setId(rs.getInt(1));
-				s.setUserName(rs.getString(2));
-				s.setPassWord(rs.getString(3));
+				s.setId(rs.getInt(3));
+				s.setUserName(rs.getString(1));
+				s.setPassWord(rs.getString(2));
 				/*
 				 Fields left out for lazy load
 				s.setFirstName(rs.getString(4));
@@ -110,9 +109,9 @@ public Student updateStudent(Student s) {
 			
 			while(rs.next()) {
 				Student s = new Student();
-				s.setId(rs.getInt(1));
-				s.setUserName(rs.getString(2));
-				s.setPassWord(rs.getString(3));
+				s.setId(rs.getInt(3));
+				s.setUserName(rs.getString(1));
+				s.setPassWord(rs.getString(2));
 				s.setFirstName(rs.getString(4));
 				s.setLastName(rs.getString(5));
 				s.setDateOfBirth(rs.getString(6));
@@ -157,16 +156,16 @@ public Student updateStudent(Student s) {
 		try {
 			
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select (firstname,lastname,yearofbirth,education) from student where idstudent=?;");
+			ps=conn.prepareStatement("select firstname,lastname,yearofbirth,education from student where idstudent=?;");
 			ps.setInt(1, s.getId());
 			
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				s.setFirstName(rs.getString(4));
-				s.setLastName(rs.getString(5));
-				s.setDateOfBirth(rs.getString(6));
-				s.setEducation(rs.getString(7));
+				s.setFirstName(rs.getString(1));
+				s.setLastName(rs.getString(2));
+				s.setDateOfBirth(rs.getString(3));
+				s.setEducation(rs.getString(4));
 			}
 			
 		}catch(Exception e){
@@ -191,9 +190,9 @@ public Student updateStudent(Student s) {
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				s.setId(rs.getInt(1));
-				s.setUserName(rs.getString(2));
-				s.setPassWord(rs.getString(3));
+				s.setId(rs.getInt(3));
+				s.setUserName(rs.getString(1));
+				s.setPassWord(rs.getString(2));
 				s.setFirstName(rs.getString(4));
 				s.setLastName(rs.getString(5));
 				s.setDateOfBirth(rs.getString(6));

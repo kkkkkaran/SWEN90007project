@@ -1,5 +1,6 @@
 package source.DataMappers;
 import java.sql.Connection;
+import org.postgresql.*;
 import java.sql.DriverManager;
 
 public class MyDatabaseConnection implements DatabaseConnection {

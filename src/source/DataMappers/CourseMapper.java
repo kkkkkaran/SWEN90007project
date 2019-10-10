@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
 
 import source.domain.Course;
@@ -70,13 +70,13 @@ public class CourseMapper {
 	public static String listCoursesText() throws SQLException {
 		CourseService cg=new CourseService();
 		List<Course> courses=cg.listCourses();
-		Iterator<Course> iterator = courses.iterator();
-		int i=0;
+		
+		
 		String courseListString="";
-		while(iterator.hasNext()) {
+		for(int i=0;i<courses.size();i++) {
 			Course c=courses.get(i);
 			courseListString=courseListString+c.getCourseId()+":"+c.getCourseName()+",";
-			i++;		
+					
 		}
 		return courseListString;
 		

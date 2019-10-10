@@ -32,12 +32,12 @@ public class TutorService implements TutorInterface {
 		return 1;
 	}
 	
-
 	@Override
-	public Tutor getTutor(String username, String password) {
+	public Tutor getTutor(String username) {
 		TutorMapper tm = new TutorMapper();
-		Tutor t = tm.getTutor(username, password);
+		Tutor t = tm.getTutor(username);
 		tutorIdentityMap.put(t.getId(), t);
+		System.out.println("TUtor"+t.getFirstName());
 		return t;
 	}
 	
@@ -55,34 +55,38 @@ public class TutorService implements TutorInterface {
 			
 		//identity map implementation
 		if(tutorIdentityMap.containsKey(id)) {
+			System.out.println("x");
 			Tutor t=tutorIdentityMap.get(id);
 			if(t.getFirstName() != null) { //if contains full profile, and not partial due to lazy loading
+				System.out.println("a");
 				return t;
 			}
 			else { //fetching rest of tutor profile, implementing lazy load
 				TutorInterface td = new TutorService();
+				System.out.println("b");
 				return td.lazyLoadedTutor(t);
 			}
 		}
+		System.out.println("c");
 		TutorMapper tm = new TutorMapper();
 		Tutor t = tm.getTutorAtId(id);
 		tutorIdentityMap.put(id, t);
 		return t;
 	}
 	
-	
+	@Override
 	public List<Tutor> listUnapprovedTutors() throws SQLException{
 		TutorMapper tm = new TutorMapper();
 		return tm.listUnapprovedTutors();
 	}
 	
-	
+	@Override
 	public List<Tutor> listAllTutors() throws SQLException{
 		TutorMapper tm = new TutorMapper();
 		return tm.listAllTutors();
 	}
 	
-	
+	@Override
 	public int deleteTutor(Tutor t) {
 		TutorMapper tm = new TutorMapper();
 		int status= tm.deleteTutor(t);
@@ -92,6 +96,13 @@ public class TutorService implements TutorInterface {
 		return status;
 		
 	}
+	@Override
+	public int approveTutor(int id) {
+		TutorMapper tm = new TutorMapper();
+		return tm.approveTutor(id);
+	}
+	
+	
 		
 		
 

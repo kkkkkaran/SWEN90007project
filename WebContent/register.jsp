@@ -10,14 +10,13 @@
 <script type="text/javascript">
 	function toggleTutorFields() {
 		if (document.getElementById('type').value == "student"){
-			document.getElementById("serviceRadius").disabled = true;
-			document.getElementById("subjects").disabled = true;
+			
 			document.getElementById("price").disabled = true;
 				
 		}
 		else{
-			document.getElementById("serviceRadius").disabled = false;
-			document.getElementById("subjects").disabled = false;
+		
+		
 			document.getElementById("price").disabled = false;
 			
 			
@@ -61,27 +60,28 @@
 					</select>
 				</td>
             </tr>
-            <%  /*
+             <% /*
             <tr>
                 <td>Subject List :</td></tr>
                 
-                	
-                	String courses = CourseGateway.listCoursesText();
+                	<% 
+                	String courses = CourseService.listCoursesText();
+                	System.out.println(courses);
                 	String[] courseList = courses.split(",");
-                	for (int i=0;i<courseList.length;i++){
-                		pageContext.setAttribute("test", courseList[i]);		
+                	for (int i=0;i<(courseList.length)-1;i++){
+                		pageContext.setAttribute("test"+i, courseList[i]);		
                 
-                
-                
-                <tr><td><input type="checkbox" name="subjects" id="subjects" value="${test}" disabled></td></tr>
                 
                 	
+                <tr><td>${test+i}<input type="checkbox" name="subjects" value="${test+i}" disabled></td></tr>
+                
+                <% 
                 }		
-                
-                
+                	 
+               	
             
             <tr> */
-            %>
+           	%>
             
             <tr>
                 <td>Rate per hour :</td>

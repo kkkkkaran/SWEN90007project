@@ -9,7 +9,7 @@ public interface StudentInterface {
 
 	public int insertStudent(Student s);
 	public int updateStudent(Student s);
-	public Student getStudent(String userName, String passWord);
+	public Student getStudent(String userName);
 	List<Student> listAllStudents() throws SQLException;
 	public int deleteStudent(Student s);
 	Student getStudentAtId(int id);

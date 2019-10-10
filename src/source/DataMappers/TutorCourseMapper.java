@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import source.domain.Course;
 import source.domain.Tutor;
 import source.services.TutorService;
 import source.services.TutorInterface;
@@ -72,13 +73,57 @@ public class TutorCourseMapper {
 		
 	}
 	
+	public List<Course> getCoursesNotRegistered(Tutor t){
+		List<Course> courses = new ArrayList<>();
+		try {
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("select * from course where idcourse not in (select course_idcourse from tutor_has_course where tutor_idtutor=(?))");
+			ps.setInt(1, t.getId());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Course c = new Course();
+				c.setCourseId(rs.getInt(1));
+				c.setCourseName(rs.getString(2));
+				courses.add(c);
+			}
+			
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		return courses;
+	}
+	
+	public List<Course> getCoursesRegistered(Tutor t){
+		List<Course> courses = new ArrayList<>();
+		try {
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("select * from course where idcourse in (select course_idcourse from tutor_has_course where tutor_idtutor=(?))");
+			ps.setInt(1, t.getId());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Course c = new Course();
+				c.setCourseId(rs.getInt(1));
+				c.setCourseName(rs.getString(2));
+				courses.add(c);
+			}
+			
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		return courses;
+	}
+	
+	
+	
 	
 	public List<Tutor> getTutorForCourse(int courseId) {
 		List<Tutor> tutors = new ArrayList<>();
 		try {
 			
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("select tutor_idtutor from tutor_has_course where course_idcourse=(?)");
+			ps=conn.prepareStatement("select tutor_idtutor from tutor_has_course where course_idcourse=(?) AND tutor_idtutor in (select idtutor from tutor where approved=true)");
 			ps.setInt(1, courseId);
 			ResultSet rs = ps.executeQuery();
 			

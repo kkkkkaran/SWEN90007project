@@ -78,6 +78,26 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>AddTutorCourse</servlet-name>
+    <servlet-class>source.script.AddTutorCourse</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddTutorCourse</servlet-name>
+    <url-pattern>/AddTutorCourse</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>DeleteTutorCourse</servlet-name>
+    <servlet-class>source.script.DeleteTutorCourse</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteTutorCourse</servlet-name>
+    <url-pattern>/DeleteTutorCourse</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <servlet>
     <servlet-name>ViewProfileServlet</servlet-name>
     <servlet-class>source.script.ViewProfile</servlet-class>
   </servlet>
@@ -94,5 +114,32 @@
     <servlet-name>CourseServlet</servlet-name>
     <url-pattern>/CourseServlet</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AddTutorAvailability</servlet-name>
+    <servlet-class>source.script.AddTutorAvailability</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddTutorAvailability</servlet-name>
+    <url-pattern>/AddTutorAvailability</url-pattern>
+  </servlet-mapping>
+  
+  <listener>
+  	<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+  </listener>
+  
+  <filter>
+  	<filter-name>ShiroFilter</filter-name>
+  	<filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>ShiroFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  	<dispatcher>REQUEST</dispatcher>
+  	<dispatcher>FORWARD</dispatcher>
+  	<dispatcher>INCLUDE</dispatcher>
+  	<dispatcher>ERROR</dispatcher>
+  </filter-mapping>
 
 </web-app>

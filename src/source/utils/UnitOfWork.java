@@ -1,8 +1,7 @@
-package source;
+package source.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import source.dataSource.*;
 import source.domain.*;
 
 public class UnitOfWork {

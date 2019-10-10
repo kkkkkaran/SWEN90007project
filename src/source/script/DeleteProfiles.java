@@ -122,8 +122,9 @@ public class DeleteProfiles extends HttpServlet {
 			String[] tutorsToDelete = request.getParameterValues("deleteTutor");
 			if(tutorsToDelete.length>0) {
 				for(int i=0;i<tutorsToDelete.length;i++) {
-					out.println("value");
-					Tutor t = td.getTutorAtId(Integer.parseInt(tutorsToDelete[i]));
+					int a = Integer.parseInt(tutorsToDelete[i]);
+					out.println(a);
+					Tutor t = td.getTutorAtId(a);
 					td.deleteTutor(t);
 					out.println(t.getFirstName()+" deleted");	
 					 
@@ -134,7 +135,9 @@ public class DeleteProfiles extends HttpServlet {
 			String[] studentsToDelete=request.getParameterValues("deleteStudent");
 			 if(studentsToDelete.length>0) {
 					for(int i=0;i<studentsToDelete.length;i++) {
-						Student s = ss.getStudentAtId(Integer.parseInt(studentsToDelete[i]));
+						int a = Integer.parseInt(studentsToDelete[i]);
+						out.println(a);
+						Student s = ss.getStudentAtId(a);
 						ss.deleteStudent(s);
 						out.println(s.getFirstName()+" deleted");	
 						 
