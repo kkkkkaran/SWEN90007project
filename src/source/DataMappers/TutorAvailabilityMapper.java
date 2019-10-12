@@ -3,15 +3,18 @@ package source.DataMappers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
 import source.domain.TutorAvailability;
+import source.utils.LockManager;
 
 
 public class TutorAvailabilityMapper {
 	static Connection conn;
 	static PreparedStatement ps;
+	
 	
 	public int setAvailability(TutorAvailability t) {
 		int status = 0;
@@ -29,10 +32,17 @@ public class TutorAvailabilityMapper {
 				ps.setBoolean(3, t.isBooked()[i]);
 				status=ps.executeUpdate();
 			}
+			conn.commit();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		return status;
@@ -69,7 +79,7 @@ public class TutorAvailabilityMapper {
 				t.setAvailability(new String[0]);
 				t.setBooked(new Boolean[0]);
 			}
-			
+			conn.close();
 		}catch(Exception e){
 			System.out.println(e);
 			

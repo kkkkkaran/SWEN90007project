@@ -3,10 +3,12 @@ package source.DataMappers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import source.domain.Appointment;
+import source.utils.LockManager;
 
 
 public class AppointmentsMapper {
@@ -24,10 +26,17 @@ public class AppointmentsMapper {
 			ps.setString(3, a.getSlot());
 			ps.setBoolean(4, a.isTutorAccepted());
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 		
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		
@@ -47,10 +56,17 @@ public class AppointmentsMapper {
 			
 			ps.setInt(1,id);
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 		
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		return status;
@@ -71,6 +87,8 @@ public class AppointmentsMapper {
 				a.setTutorAccepted(rs.getBoolean(5));
 				appointments.add(a);
 			}
+			
+			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
@@ -95,8 +113,11 @@ public class AppointmentsMapper {
 				appointments.add(a);
 			}
 			
+			conn.close();
+			
 		}catch(Exception e){
 			System.out.println(e);
+			
 			
 		}
 		return appointments;
@@ -117,8 +138,11 @@ public class AppointmentsMapper {
 				a.setTutorAccepted(rs.getBoolean(5));
 				
 			}	
+			
+			conn.close();
 		}catch(Exception e){
 			System.out.println(e);
+			
 			
 		}
 		return a;
@@ -134,10 +158,17 @@ public class AppointmentsMapper {
 			ps.setString(3, a.getSlot());
 			ps.setBoolean(4, a.isTutorAccepted());
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 		
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		

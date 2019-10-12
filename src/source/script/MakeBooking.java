@@ -14,6 +14,7 @@ import source.domain.TutorAvailability;
 import source.services.AppointmentsService;
 import source.services.TutorAvailabilityService;
 import source.utils.AppSession;
+import source.utils.LockManager;
 
 /**
  * Servlet implementation class MakeBooking
@@ -52,6 +53,7 @@ public class MakeBooking extends HttpServlet {
 		out.println("<body>");
 		if(AppSession.isAuthenticated() && AppSession.hasRole(AppSession.STUDENT_ROLE)) {
 			
+			
 			System.out.println("selection"+request.getParameter("selection"));
 			System.out.println("tutorId"+request.getParameter("tutorId"));
 			int selection = Integer.parseInt(request.getParameter("selection"));
@@ -60,6 +62,12 @@ public class MakeBooking extends HttpServlet {
 			//Fetching slot details 
 			TutorAvailabilityService tas = new TutorAvailabilityService();
 			TutorAvailability t = tas.getAvailability(tutorId);
+			//Locking TutorAvailability
+			try {
+				LockManager.getInstance().acquireWriteLock(t);
+			}catch(InterruptedException e) {
+				System.out.println("Could not lock");
+			}
 			String slot = t.getAvailability()[selection];
 			Boolean[] booked = t.isBooked();
 			booked[selection] = true;
@@ -79,10 +87,14 @@ public class MakeBooking extends HttpServlet {
 				tas.setAvailability(t);
 				out.println("Booking Created. Wait for Tutor Approval");
 				
+				
 			}
 			else {
 				out.println("Failure");
 			}
+			
+			//Release Lock
+			LockManager.getInstance().releaseWriteLock(t);
 			
 		}
 		else {

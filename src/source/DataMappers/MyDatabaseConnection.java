@@ -12,6 +12,7 @@ public class MyDatabaseConnection implements DatabaseConnection {
 		try {
 		    Class.forName("org.postgresql.Driver");
 		    conn=DriverManager.getConnection(connUrl, username, password);
+		    conn.setAutoCommit(false);
 		}catch(Exception e){
 			System.out.println(e);
 			

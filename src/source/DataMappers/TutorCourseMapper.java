@@ -3,6 +3,7 @@ package source.DataMappers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,17 @@ public class TutorCourseMapper {
 				ps.setInt(1, tutorId);
 				ps.setInt(2, subjectId);
 				status=ps.executeUpdate();
+				conn.commit();
 				conn.close();
 				
 			}catch(Exception e){
 				System.out.println(e);
+				try {
+					conn.rollback();
+				}
+				catch (SQLException ignored) {
+					System.out.println("Rollback failed");
+				}
 				
 			}
 			return status;
@@ -44,10 +52,17 @@ public class TutorCourseMapper {
 			ps=conn.prepareStatement("delete from tutor_has_course where course_idcourse=?");
 			ps.setInt(1, subjectId);
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		return status;
@@ -63,10 +78,17 @@ public class TutorCourseMapper {
 			ps.setInt(1, subjectId);
 			ps.setInt(2, tutorId);
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		return status;
@@ -82,10 +104,17 @@ public class TutorCourseMapper {
 			
 			ps.setInt(1, tutorId);
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		return status;

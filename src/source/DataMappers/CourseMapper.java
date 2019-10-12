@@ -21,9 +21,16 @@ public class CourseMapper {
 			ps=conn.prepareStatement("INSERT INTO course(name) VALUES(?)");
 			ps.setString(1, name);
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 		
 		}catch(Exception e){
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			System.out.println(e);
 			
 		}
@@ -36,10 +43,17 @@ public class CourseMapper {
 			ps=conn.prepareStatement("DELETE FROM course WHERE name=?;");
 			ps.setString(1, name);
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 		
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		return status;
@@ -57,6 +71,8 @@ public class CourseMapper {
 				c.setCourseName(rs.getString(2));
 				courses.add(c);
 			}
+			
+			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);

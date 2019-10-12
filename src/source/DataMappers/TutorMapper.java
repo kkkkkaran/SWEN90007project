@@ -36,10 +36,17 @@ public class TutorMapper {
 			
 
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		return status;
@@ -71,10 +78,17 @@ public class TutorMapper {
 			ps.setBoolean(10, t.getApproved());
 
 			ps.executeUpdate();
+			conn.commit();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		
@@ -114,6 +128,8 @@ public class TutorMapper {
 				
 				
 			}
+			
+			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
@@ -276,11 +292,18 @@ public class TutorMapper {
 			conn=MyDatabaseConnection.getConn();
 			ps=conn.prepareStatement("delete from tutor WHERE idtutor="+t.getId());
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 			
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		return status;

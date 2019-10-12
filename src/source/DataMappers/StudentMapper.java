@@ -32,10 +32,17 @@ public class StudentMapper {
 			
 
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		return status;
@@ -57,10 +64,17 @@ public Student updateStudent(Student s) {
 			ps.setString(7, s.getEducation());
 
 			ps.executeUpdate();
+			conn.commit();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		
@@ -91,8 +105,11 @@ public Student updateStudent(Student s) {
 				*/
 			}
 			
+			conn.close();
+			
 		}catch(Exception e){
 			System.out.println(e);
+			
 			
 		}
 		
@@ -122,6 +139,8 @@ public Student updateStudent(Student s) {
 				
 			}
 			
+			conn.close();
+			
 		}catch(Exception e){
 			System.out.println(e);
 			
@@ -139,10 +158,17 @@ public Student updateStudent(Student s) {
 			conn=MyDatabaseConnection.getConn();
 			ps=conn.prepareStatement("delete from student WHERE idstudent="+s.getId());
 			status=ps.executeUpdate();
+			conn.commit();
 			conn.close();
 			
 		}catch(Exception e){
 			System.out.println(e);
+			try {
+				conn.rollback();
+			}
+			catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+			}
 			
 		}
 		
