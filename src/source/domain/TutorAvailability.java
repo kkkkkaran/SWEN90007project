@@ -3,7 +3,7 @@ package source.domain;
 public class TutorAvailability {
 	private int id;
 	private String[] availability;
-	private boolean[] booked;
+	private Boolean[] booked;
 	public int getId() {
 		return id;
 	}
@@ -16,11 +16,11 @@ public class TutorAvailability {
 	public void setAvailability(String[] availability) {
 		this.availability = availability;
 	}
-	public boolean[] isBooked() {
+	public Boolean[] isBooked() {
 		return booked;
 	}
-	public void setBooked(boolean[] booked) {
-		this.booked = booked;
+	public void setBooked(Boolean[] bookedarr) {
+		this.booked = bookedarr;
 	}
 
 }

@@ -93,7 +93,7 @@ public class CourseServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		if(tutorList.size()>0) {
-		out.println("<form action = \"ViewAvailability\">");
+		out.println("<form action = \"ViewAvailability\" method=\"post\">");
 		out.println("<table>");
 		out.println("<tr><th>Tutor Name</th><th>Tutor Location</th><th>Selection</th></tr>");
 		for(int i=0;i<tutorList.size();i++) {

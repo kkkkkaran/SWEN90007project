@@ -21,6 +21,7 @@ public class TutorAvailabilityMapper {
 			String[] availList = t.getAvailability();
 			ps=conn.prepareStatement("DELETE FROM tutor_availability WHERE tutor_id = ?");
 			ps.setInt(1, t.getId());
+			status=ps.executeUpdate();
 			for(int i=0;i<availList.length;i++) {
 				ps=conn.prepareStatement("INSERT INTO tutor_availability(tutor_id,availability,booked) VALUES (?,?,?)");
 				ps.setInt(1, t.getId());
@@ -50,20 +51,23 @@ public class TutorAvailabilityMapper {
 			while(rs.next()) {
 				empty = false;
 				availStr.add(rs.getString(3));
-				booked.add(rs.getBoolean(4));
+				boolean temp = rs.getBoolean(4);
+				booked.add(temp);
+				System.out.println(temp);
 			}
 			t.setId(tutorId);
 			if(empty == false) {
 				t.setAvailability(availStr.toArray(new String[availStr.size()]));
-				boolean[] bookedarr = new boolean[booked.size()];
+				Boolean[] bookedarr = new Boolean[booked.size()];
 				for(int i=0;i<booked.size();i++) {
 					bookedarr[i]=booked.get(i);
 				}
+				System.out.println(booked);
 				t.setBooked(bookedarr);
 			}
 			else {
 				t.setAvailability(new String[0]);
-				t.setBooked(new boolean[0]);
+				t.setBooked(new Boolean[0]);
 			}
 			
 		}catch(Exception e){

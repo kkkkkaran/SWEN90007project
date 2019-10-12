@@ -3,6 +3,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import source.domain.Tutor;
+import source.DataMappers.AppointmentsMapper;
+import source.DataMappers.TutorCourseMapper;
 import source.DataMappers.TutorMapper;
 
 
@@ -93,6 +95,13 @@ public class TutorService implements TutorInterface {
 		if(status == 1 && tutorIdentityMap.containsKey(t.getId())) {
 			tutorIdentityMap.remove(t.getId());
 		}
+		//Removing all courses tutor registered for
+		TutorCourseMapper tcm = new TutorCourseMapper(); 
+		tcm.deleteSubjectsForTutor(t.getId());
+		
+		//Removing all appointments for tutor
+		AppointmentsMapper am = new AppointmentsMapper();
+		am.deleteAppointment(t.getId(), "tutor");
 		return status;
 		
 	}

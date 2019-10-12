@@ -44,7 +44,7 @@ public class AddTutorAvailability extends HttpServlet {
 		if (AppSession.isAuthenticated() && AppSession.hasRole(AppSession.TUTOR_ROLE))	{
 			int userID = AppSession.getUser().getId();
 			String[] availabilityArr = request.getParameter("availability").split("[\\r\\n]+");
-			boolean[] booked = new boolean[availabilityArr.length];
+			Boolean[] booked = new Boolean[availabilityArr.length];
 			for(int i=0;i<availabilityArr.length;i++) {
 				booked[i]= false;
 			}

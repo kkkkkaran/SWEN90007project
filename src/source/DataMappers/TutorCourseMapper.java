@@ -73,6 +73,25 @@ public class TutorCourseMapper {
 		
 	}
 	
+	public int deleteSubjectsForTutor(int tutorId) {
+		int status = 0;
+		
+		try {
+			conn=MyDatabaseConnection.getConn();
+			ps=conn.prepareStatement("delete from tutor_has_course where tutor_idtutor=?");
+			
+			ps.setInt(1, tutorId);
+			status=ps.executeUpdate();
+			conn.close();
+			
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		return status;
+		
+	}
+	
 	public List<Course> getCoursesNotRegistered(Tutor t){
 		List<Course> courses = new ArrayList<>();
 		try {

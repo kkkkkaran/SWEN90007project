@@ -86,6 +86,25 @@
     <url-pattern>/AddTutorCourse</url-pattern>
   </servlet-mapping>
   
+ 
+  <servlet>
+    <servlet-name>ViewAvailability</servlet-name>
+    <servlet-class>source.script.ViewAvailability</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewAvailability</servlet-name>
+    <url-pattern>/ViewAvailability</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MakeBooking</servlet-name>
+    <servlet-class>source.script.MakeBooking</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MakeBooking</servlet-name>
+    <url-pattern>/MakeBooking</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>DeleteTutorCourse</servlet-name>
     <servlet-class>source.script.DeleteTutorCourse</servlet-class>
@@ -95,6 +114,14 @@
     <url-pattern>/DeleteTutorCourse</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ViewBookings</servlet-name>
+    <servlet-class>source.script.ViewBookings</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewBookings</servlet-name>
+    <url-pattern>/ViewBookings</url-pattern>
+  </servlet-mapping>
   
   
   <servlet>

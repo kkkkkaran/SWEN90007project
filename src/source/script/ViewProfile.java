@@ -63,18 +63,19 @@ public class ViewProfile extends HttpServlet {
 			out.println("<tr><td>Last Name :</td><td><input type=\"text\" name=\"lname\" value=\""+s.getLastName()+"\"></td></tr>");
 			out.println("<tr><td>Year of Birth (YYYY):</td><td><input type=\"text\" name=\"dob\" value=\""+ s.getFirstName()+"\"></td></tr>");
 			out.println("<tr><td>Education :</td><td><input type=\"text\" name=\"education\" value=\""+ s.getDateOfBirth()+"\"></td></tr>");
-			out.println("<tr><td>Location :</td><td><input type=\"text\" name=\"address\" value=\""+ s.getAddress()+"\"></td></tr>");
+			
 			if(AppSession.hasRole(AppSession.TUTOR_ROLE)) { //printing tutor specific fields
 				t = mt.getTutor(s.getUserName());
 				/*String[] subjectList = t.getSubjects();
 				String subjects = String.join(",", subjectList);
 				out.println("<tr> <td>Subject List :</td> <td><input type=\"text\" name=\"subjects\" id=\"subjects\" value=\""+subjects+"\" disabled></td> </tr>);
 				*/
+				out.println("<tr><td>Location :</td><td><input type=\"text\" name=\"address\" value=\""+ t.getAddress()+"\"></td></tr>");
 				out.println("<tr><td>Rate per hour :</td><td><input type=\"text\" name=\"price\" id=\"price\" value=\""+t.getPrice()+"\"></td></tr>");	
 			}
 			out.println("<tr><td>UserName :</td> <td><input type=\"text\" name=\"userName\" value=\""+ s.getUserName()+"\" disabled></td> </tr>");
 			out.println(" <tr> <td>Password :</td><td><input type=\"password\" name=\"passWord1\" value=\""+ s.getPassWord()+"\"></td></tr>");
-	        out.println("<tr><td><input type=\"submit\" value=\"Update\"></td><td><a href=\"homepage.jsp\">HomePage</a></td></tr>");
+	        out.println("<tr><td><input type=\"submit\" value=\"Update\"></td><td><a href=\"welcome.jsp\">HomePage</a></td></tr>");
 	        out.println("</table>");
 	        out.println("</form>");
 	
@@ -91,8 +92,8 @@ public class ViewProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter writer = response.getWriter();
-		doGet(request, response);
+		PrintWriter out = response.getWriter();
+	
 		
 		StudentInterface sd = new StudentService();
 		TutorInterface td = new TutorService();
@@ -105,10 +106,15 @@ public class ViewProfile extends HttpServlet {
 		String dob = request.getParameter("dob");
 		String education = request.getParameter("education");
 		String address = request.getParameter("address");
-		String type = request.getParameter("type");
 		
-		if(type=="tutor") {
-			String[] subjects = request.getParameterValues("subjects");
+		out.println("<!DOCTYPE html>");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title> View Profile </title>");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("yoyo");
+		if(AppSession.hasRole(AppSession.TUTOR_ROLE)) {
 			String price = request.getParameter("price");
 			
 			Tutor t = td.getTutor(userName);
@@ -119,11 +125,10 @@ public class ViewProfile extends HttpServlet {
 			t.setLastName(lname);
 			t.setDateOfBirth(dob);
 			t.setAddress(address);
-			t.setSubjects(subjects);
 			t.setPrice(price);
 			td.updateTutor(t);
-			writer.println("Done");
-			
+			out.println("Done");
+			doGet(request,response);
 			
 		}
 		else {
@@ -136,10 +141,12 @@ public class ViewProfile extends HttpServlet {
 			s.setDateOfBirth(dob);
 			s.setEducation(education);
 			sd.updateStudent(s);
-			writer.println("Done");
-				
+			out.println("Done");
+			doGet(request,response);	
 			
 		}
+		out.println("</body>");
+		out.println("</html>");
 	}
 
 }

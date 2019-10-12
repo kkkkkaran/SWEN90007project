@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import source.domain.Student;
+import source.DataMappers.AppointmentsMapper;
 import source.DataMappers.StudentMapper;
 
 public class StudentService implements StudentInterface {
@@ -49,6 +50,9 @@ public class StudentService implements StudentInterface {
 		if(status == 1 && studentIdentityMap.containsKey(s.getId())) {
 			studentIdentityMap.remove(s.getId());
 		}
+		//Deleting Appointments for Student 
+		AppointmentsMapper am = new AppointmentsMapper();
+		am.deleteAppointment(s.getId(), "student"); 
 		return status;
 		
 	}
