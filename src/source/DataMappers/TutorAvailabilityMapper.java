@@ -5,8 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-
+import source.domain.Tutor;
 import source.domain.TutorAvailability;
 import source.utils.LockManager;
 
@@ -14,7 +15,7 @@ import source.utils.LockManager;
 public class TutorAvailabilityMapper {
 	static Connection conn;
 	static PreparedStatement ps;
-	
+	static HashMap<Integer, TutorAvailability> tutorAvailIdentityMap = new HashMap<Integer, TutorAvailability>();
 	
 	public int setAvailability(TutorAvailability t) {
 		int status = 0;
@@ -45,11 +46,22 @@ public class TutorAvailabilityMapper {
 			}
 			
 		}
+		if(tutorAvailIdentityMap.containsKey(t.getId())) {
+			tutorAvailIdentityMap.replace(t.getId(), t);
+		}
+		else {
+			tutorAvailIdentityMap.put(t.getId(), t);
+		}
+		
 		return status;
 		
 	}
 	public TutorAvailability getAvailability(int tutorId) {
+		
 		TutorAvailability t = new TutorAvailability();
+		if(tutorAvailIdentityMap.containsKey(tutorId)) {
+			return tutorAvailIdentityMap.get(tutorId);
+		}
 		try {
 			conn=MyDatabaseConnection.getConn();
 			ps=conn.prepareStatement("select * from tutor_availability where tutor_id=(?)");
@@ -84,6 +96,7 @@ public class TutorAvailabilityMapper {
 			System.out.println(e);
 			
 		}
+		tutorAvailIdentityMap.put(t.getId(), t);
 		return t;
 	}
 
