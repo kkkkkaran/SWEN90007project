@@ -30,7 +30,7 @@ public class ExclusiveWriteLockManager implements LockManagerInterface {
 	}
 
 	@Override
-	public boolean acquireLock(String type, String id, String sessionId) throws Exception {
+	public boolean acquireLock(String type, int id, int sessionId) throws Exception {
 		
 		boolean result = false;
 		
@@ -54,8 +54,8 @@ public class ExclusiveWriteLockManager implements LockManagerInterface {
 					+ " values (?,?,?);"; 
 			Connection conn = MyDatabaseConnection.getConn();
 			PreparedStatement pStatement = (PreparedStatement) conn.prepareStatement(acquireSQL);
-			pStatement.setString(1, id);
-			pStatement.setString(2, sessionId);
+			pStatement.setInt(1, id);
+			pStatement.setInt(2, sessionId);
 			pStatement.setString(3, type);
 			int sqlResult = pStatement.executeUpdate();
 			
@@ -73,14 +73,14 @@ public class ExclusiveWriteLockManager implements LockManagerInterface {
 	}
 
 	@Override
-	public boolean releaseLock(String type, String id, String sessionId) throws Exception {
+	public boolean releaseLock(String type, int id, int sessionId) throws Exception {
 		String releaseSQL = "delete from Lock where tableName=? AND Id=?"
 				+" AND sessionId=?";
 		Connection conn = MyDatabaseConnection.getConn();
 		PreparedStatement pStatement = (PreparedStatement) conn.prepareStatement(releaseSQL);
 		pStatement.setString(1, type);
-		pStatement.setString(2, id);
-		pStatement.setString(3, sessionId);
+		pStatement.setInt(2, id);
+		pStatement.setInt(3, sessionId);
 		
 		int result = pStatement.executeUpdate();
 		
@@ -91,7 +91,7 @@ public class ExclusiveWriteLockManager implements LockManagerInterface {
 	}
 	
 	
-	private int hasLock(String type, String id, String sessionId) {
+	private int hasLock(String type, int id, int sessionId) {
 		String hasLockSQL = "SELECT sessionId FROM Lock WHERE id =?" +
 				"AND tableName=?";
 		int result = 0;
@@ -99,15 +99,15 @@ public class ExclusiveWriteLockManager implements LockManagerInterface {
 		try {
 			conn = MyDatabaseConnection.getConn();
 			PreparedStatement pStatement = (PreparedStatement) conn.prepareStatement(hasLockSQL);
-			pStatement.setString(1, id);
+			pStatement.setInt(1, id);
 			pStatement.setString(2, type);
 			
 			ResultSet resultSet = pStatement.executeQuery();
 			// if current object has been locked
 			while (resultSet.next()) {
-				String session_in_DB = resultSet.getString(1);
+				int session_in_DB = resultSet.getInt(1);
 				// if current session has the lock
-				if (session_in_DB.equals(sessionId)) {
+				if (session_in_DB == sessionId) {
 					result = 1;
 				}
 				// if the lock has been taken by others

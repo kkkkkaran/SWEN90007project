@@ -8,17 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import source.domain.Appointment;
-import source.utils.LockManager;
+import source.utils.AppSession;
+
+import source.utils.LockManagerInterface;
 
 
 public class AppointmentsMapper {
 	
 	static Connection conn;
 	static PreparedStatement ps;
+	private LockManagerInterface lm;
+	private int sessionId;
+	private String type;
+	public AppointmentsMapper() {
+		this.lm = ExclusiveWriteLockManager.getInstance();
+		this.sessionId = AppSession.getUser().getId();
+		this.type = "appointment";
+	}
 	
 	public int insertAppointment(Appointment a) {
 		int status = 0;
+		
 		try {
+			if (lm.acquireLock(type, sessionId, sessionId))  { //implicit lock
 			conn=MyDatabaseConnection.getConn();
 			ps=conn.prepareStatement("INSERT INTO appointment(studentid,tutorid,slot,accepted) VALUES(?,?,?,?)");
 			ps.setInt(1, a.getStudentId());
@@ -28,7 +40,7 @@ public class AppointmentsMapper {
 			status=ps.executeUpdate();
 			conn.commit();
 			conn.close();
-		
+		}
 		}catch(Exception e){
 			System.out.println(e);
 			try {
@@ -46,19 +58,20 @@ public class AppointmentsMapper {
 	public int deleteAppointment(int id, String role) {
 		int status = 0;
 		try {
-			conn=MyDatabaseConnection.getConn();
-			if(role.equalsIgnoreCase("student")){
-				ps=conn.prepareStatement("DELETE FROM appointment WHERE studentid = ? ");
+			if (lm.acquireLock(type, id, sessionId))  { //implicit lock
+				conn=MyDatabaseConnection.getConn();
+				if(role.equalsIgnoreCase("student")){
+					ps=conn.prepareStatement("DELETE FROM appointment WHERE studentid = ? ");
+				}
+				else {
+					ps=conn.prepareStatement("DELETE FROM appointment WHERE tutorid = ? ");
+				}
+				
+				ps.setInt(1,id);
+				status=ps.executeUpdate();
+				conn.commit();
+				conn.close();
 			}
-			else {
-				ps=conn.prepareStatement("DELETE FROM appointment WHERE tutorid = ? ");
-			}
-			
-			ps.setInt(1,id);
-			status=ps.executeUpdate();
-			conn.commit();
-			conn.close();
-		
 		}catch(Exception e){
 			System.out.println(e);
 			try {

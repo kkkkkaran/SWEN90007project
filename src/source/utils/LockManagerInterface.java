@@ -9,7 +9,7 @@ public interface LockManagerInterface {
 	 * @param sessionId - the owner of the lock
 	 * @return
 	 */
-	public boolean acquireLock(String type, String id, String sessionId) throws Exception;
+	public boolean acquireLock(String type, int id, int sessionId) throws Exception;
 	
 	/**
 	 * release the lock for specific type and id.
@@ -18,6 +18,6 @@ public interface LockManagerInterface {
 	 * @param sessionId - the owner of the lock
 	 * @return
 	 */
-	public boolean releaseLock(String type, String id, String sessionId) throws Exception;
+	public boolean releaseLock(String type, int id, int sessionId) throws Exception;
 	
 }

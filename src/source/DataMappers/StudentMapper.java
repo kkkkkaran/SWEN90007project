@@ -54,7 +54,7 @@ public Student updateStudent(Student s) {
 		
 		try {
 			conn=MyDatabaseConnection.getConn();
-			ps=conn.prepareStatement("update student values(?,?,?,?,?,?,?) WHERE idstudent="+s.getId());
+			ps=conn.prepareStatement("update student values(?,?,?,?,?,?,?) WHERE idstudent=?");
 			ps.setInt(3, s.getId());
 			ps.setString(1, s.getUserName());
 			ps.setString(2, s.getPassWord());
@@ -62,7 +62,7 @@ public Student updateStudent(Student s) {
 			ps.setString(5, s.getLastName());
 			ps.setString(6, s.getDateOfBirth());
 			ps.setString(7, s.getEducation());
-
+			ps.setInt(8, s.getId());
 			ps.executeUpdate();
 			conn.commit();
 			conn.close();

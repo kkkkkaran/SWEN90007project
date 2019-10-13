@@ -56,7 +56,7 @@ public class ViewProfile extends HttpServlet {
 				s = ss.lazyLoadedStudent((Student)AppSession.getUser());
 			}
 			
-			out.println("<form action=\"ViewProfile\" method=\"post\">");
+			out.println("<form action=\"ViewProfileServlet\" method=\"post\">");
 			out.println("<table>");
 			out.println("<input type=\"hidden\" name=\"type\" value=\""+userType+"\">");
 			out.println("<tr><td>First Name :</td><td><input type=\"text\" name=\"fname\" value=\""+s.getFirstName()+"\"></td></tr>");
